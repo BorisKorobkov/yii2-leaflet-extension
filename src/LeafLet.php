@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet;
 
@@ -36,50 +38,58 @@ class LeafLet extends Component
      * @var integer a counter used to generate [[name]] for layers.
      * @internal
      */
-    public static $counter = 0;
+    public static int $counter = 0;
+
     /**
      * @var string the prefix to the automatically generated object names.
      * @see [[generateName()]]
      */
-    public static $autoNamePrefix = 'l';
+    public static string $autoNamePrefix = 'l';
+
     /**
      * @var string the name to give to the variable. The name of the map specified on the
      * [[TileLayer]] component overrides this one.
      */
-    public $name = 'map';
+    public string $name = 'map';
+
     /**
      * @var int the zoom level of the map
      */
-    public $zoom = 13;
+    public int $zoom = 13;
+
     /**
      * @var array the options for the underlying LeafLetJs JS component.
      * Please refer to the LeafLetJs api reference for possible
      * [options](http://leafletjs.com/reference.html).
      */
-    public $clientOptions = [];
+    public array $clientOptions = [];
+
     /**
      * @var array the event handlers for the underlying LeafletJs JS plugin.
      * Please refer to the LeafLetJs js api object options for possible events.
      */
-    public $clientEvents = [];
+    public array $clientEvents = [];
+
     /**
      * @var Layer[] holding ui layers (do not confuse with map layers, these are markers, popups, polygons, etc)
      */
-    private $_layers = [];
+    private array $_layers = [];
+
     /**
      * @var LayerGroup[] holding layer groups
      */
-    private $_layerGroups = [];
+    private array $_layerGroups = [];
+    
     /**
      * @var LatLng sets the center of the map
      */
-    private $_center;
+    private ?LatLng $_center = null;
 
     /**
      * Returns the center of the map.
-     * @return LatLng center of the map.
+     * @return LatLng|null center of the map.
      */
-    public function getCenter()
+    public function getCenter(): ?LatLng
     {
         return $this->_center;
     }
@@ -89,7 +99,7 @@ class LeafLet extends Component
      *
      * @param LatLng $value center of the map.
      */
-    public function setCenter(LatLng $value)
+    public function setCenter(LatLng $value): void
     {
         $this->_center = $value;
     }
@@ -97,14 +107,14 @@ class LeafLet extends Component
     /**
      * @var Control[] holding controls to be added to the map.
      */
-    private $_controls = [];
+    private array $_controls = [];
 
     /**
      * @param \dosamigos\leaflet\controls\Control[] $controls
      *
      * @throws \yii\base\InvalidArgumentException
      */
-    public function setControls(array $controls)
+    public function setControls(array $controls): void
     {
         foreach ($controls as $control) {
             if (!($control instanceof Control)) {
@@ -117,7 +127,7 @@ class LeafLet extends Component
     /**
      * @return \dosamigos\leaflet\controls\Control[]
      */
-    public function getControls()
+    public function getControls(): array
     {
         return $this->_controls;
     }
@@ -125,7 +135,7 @@ class LeafLet extends Component
     /**
      * @param Control $control
      */
-    public function addControl(Control $control)
+    public function addControl(Control $control): void
     {
         $this->_controls[] = $control;
     }
@@ -133,14 +143,14 @@ class LeafLet extends Component
     /**
      * @var \dosamigos\leaflet\layers\TileLayer
      */
-    private $_tileLayer;
+    private ?TileLayer $_tileLayer = null;
 
     /**
      * @param \dosamigos\leaflet\layers\TileLayer $tileLayer
      *
      * @return static the component itself
      */
-    public function setTileLayer(TileLayer $tileLayer)
+    public function setTileLayer(TileLayer $tileLayer): self
     {
         if (!empty($tileLayer->map) && strcmp($tileLayer->map, $this->name) !== 0) {
             $this->name = $tileLayer->map;
@@ -156,7 +166,7 @@ class LeafLet extends Component
     /**
      * @return \dosamigos\leaflet\layers\TileLayer
      */
-    public function getTileLayer()
+    public function getTileLayer(): ?TileLayer
     {
         return $this->_tileLayer;
     }
@@ -164,7 +174,7 @@ class LeafLet extends Component
     /**
      * @var array holds the js script lines to be registered.
      */
-    private $_js = [];
+    private array $_js = [];
 
     /**
      * @param string|array $js custom javascript code to be registered.
@@ -172,7 +182,7 @@ class LeafLet extends Component
      *
      * @return static the component itself
      */
-    public function setJs($js)
+    public function setJs($js): self
     {
         $this->_js = is_array($js) ? $js : [$js];
         return $this;
@@ -183,7 +193,7 @@ class LeafLet extends Component
      *
      * @return static the component itself
      */
-    public function appendJs($js)
+    public function appendJs($js): self
     {
         $this->_js[] = $js;
         return $this;
@@ -193,7 +203,7 @@ class LeafLet extends Component
      * @return array the queued javascript code to be registered.
      * *Warning*: This method does not include map initialization.
      */
-    public function getJs()
+    public function getJs(): array
     {
         $js = [];
         foreach ($this->getLayers() as $layer) {
@@ -220,12 +230,12 @@ class LeafLet extends Component
     /**
      * @var PluginManager
      */
-    private $_plugins;
+    private ?PluginManager $_plugins = null;
 
     /**
      * @return PluginManager
      */
-    public function getPlugins()
+    public function getPlugins(): PluginManager
     {
         return $this->_plugins;
     }
@@ -235,7 +245,7 @@ class LeafLet extends Component
      *
      * @param Plugin $plugin
      */
-    public function installPlugin(Plugin $plugin)
+    public function installPlugin(Plugin $plugin): void
     {
         $plugin->map = $this->name;
         $this->getPlugins()->install($plugin);
@@ -246,9 +256,9 @@ class LeafLet extends Component
      *
      * @param $plugin
      *
-     * @return mixed|null
+     * @return mixed
      */
-    public function removePlugin($plugin)
+    public function removePlugin($plugin): mixed
     {
         return $this->getPlugins()->remove($plugin);
     }
@@ -256,7 +266,7 @@ class LeafLet extends Component
     /**
      * Initializes the widget.
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         if (empty($this->center) || empty($this->zoom)) {
@@ -277,7 +287,7 @@ class LeafLet extends Component
      *
      * @return string
      */
-    public function widget($config = [])
+    public function widget($config = []): string
     {
         ob_start();
         ob_implicit_flush(false);
@@ -293,7 +303,7 @@ class LeafLet extends Component
      *
      * @return static the component itself
      */
-    public function addLayer(Layer $layer)
+    public function addLayer(Layer $layer): self
     {
         $this->_layers[] = $layer;
         return $this;
@@ -302,7 +312,7 @@ class LeafLet extends Component
     /**
      * @return Layer[] the stored layers
      */
-    public function getLayers()
+    public function getLayers(): array
     {
         return $this->_layers;
     }
@@ -312,7 +322,7 @@ class LeafLet extends Component
      *
      * @return static the component itself
      */
-    public function addLayerGroup(LayerGroup $group)
+    public function addLayerGroup(LayerGroup $group): self
     {
         $this->_layerGroups[] = $group;
         return $this;
@@ -321,7 +331,7 @@ class LeafLet extends Component
     /**
      * @return layers\LayerGroup[] all stored layer groups
      */
-    public function getLayerGroups()
+    public function getLayerGroups(): array
     {
         return $this->_layerGroups;
     }
@@ -330,7 +340,7 @@ class LeafLet extends Component
      * Clears all stored layer groups
      * @return static the component itself
      */
-    public function clearLayerGroups()
+    public function clearLayerGroups(): self
     {
         $this->_layerGroups = [];
         return $this;
@@ -341,7 +351,7 @@ class LeafLet extends Component
      *
      * @return array
      */
-    public function getEncodedControls($controls)
+    public function getEncodedControls($controls): array
     {
         return $this->getEncodedObjects($controls);
     }
@@ -351,7 +361,7 @@ class LeafLet extends Component
      *
      * @return array
      */
-    public function getEncodedLayerGroups($groups)
+    public function getEncodedLayerGroups($groups): array
     {
         return $this->getEncodedObjects($groups);
     }
@@ -361,7 +371,7 @@ class LeafLet extends Component
      *
      * @return array
      */
-    public function getEncodedPlugins($plugins)
+    public function getEncodedPlugins($plugins): array
     {
         return $this->getEncodedObjects($plugins);
     }
@@ -369,7 +379,7 @@ class LeafLet extends Component
     /**
      * @return string
      */
-    public static function generateName()
+    public static function generateName(): string
     {
         return self::$autoNamePrefix . self::$counter++;
     }
@@ -379,7 +389,7 @@ class LeafLet extends Component
      *
      * @return array
      */
-    protected function getEncodedObjects($objects)
+    protected function getEncodedObjects($objects): array
     {
         $js = [];
         foreach ((array)$objects as $object) {

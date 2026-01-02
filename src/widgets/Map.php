@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\widgets;
@@ -27,23 +29,25 @@ class Map extends Widget
     /**
      * @var \dosamigos\leaflet\LeafLet component holding all configuration
      */
-    public $leafLet;
+    public ?LeafLet $leafLet = null;
+
     /**
      * @var string the height of the map. Failing to configure the height of the map, will result in
      * unexpected results.
      */
-    public $height = '200px';
+    public string $height = '200px';
+    
     /**
      * @var array the HTML attributes for the widget container tag.
      */
-    public $options = [];
+    public array $options = [];
 
     /**
      * Initializes the widget.
      * This method will register the bootstrap asset bundle. If you override this method,
      * make sure you call the parent implementation first.
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         if (!isset($this->options['id'])) {
@@ -63,9 +67,9 @@ class Map extends Widget
 
     /**
      * Renders the map
-     * @return string|void
+     * @return void
      */
-    public function run()
+    public function run(): void
     {
         echo "\n" . Html::tag('div', '', $this->options);
         $this->registerScript();
@@ -75,7 +79,7 @@ class Map extends Widget
      * Register the script for the map to be rendered according to the configurations on the LeafLet
      * component.
      */
-    public function registerScript()
+    public function registerScript(): void
     {
         $view = $this->getView();
 

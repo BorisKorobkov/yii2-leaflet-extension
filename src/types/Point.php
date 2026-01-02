@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\types;
@@ -19,10 +21,10 @@ use yii\web\JsExpression;
  *  $map->panBy(new Point(['x' => 200, 'y' => '300']));
  * ```
  *
- * @see http://leafletjs.com/reference.html#point
+ * @see https://leafletjs.com/reference.html#point
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\types
  */
 class Point extends Type implements ArrayableInterface
@@ -30,23 +32,25 @@ class Point extends Type implements ArrayableInterface
     /**
      * @var float x coordinate
      */
-    public $x;
+    public float $x;
+
     /**
      * @var float y coordinate
      */
-    public $y;
+    public float $y;
+    
     /**
      * @var bool if round is set to true, LetLeaf will round the x and y values.
      */
-    public $round = false;
+    public bool $round = false;
 
     /**
      * Initializes the class
      * @throws \yii\base\InvalidConfigException
      */
-    public function init()
+    public function init(): void
     {
-        if (empty($this->x) || empty($this->y)) {
+        if (!isset($this->x) || !isset($this->y)) {
             throw new InvalidConfigException("'x' or 'y' cannot be empty.");
         }
     }
@@ -54,7 +58,7 @@ class Point extends Type implements ArrayableInterface
     /**
      * @return \yii\web\JsExpression the js initialization code of the object
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $x = $this->x;
         $y = $this->y;
@@ -68,7 +72,7 @@ class Point extends Type implements ArrayableInterface
      *
      * @return array|JsExpression
      */
-    public function toArray($encode = false)
+    public function toArray($encode = false): mixed
     {
         $point = [$this->x, $this->y];
         return $encode ? new JsExpression(Json::encode($point, LeafLet::JSON_OPTIONS)) : $point;

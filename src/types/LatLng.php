@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet\types;
 
@@ -28,8 +30,8 @@ use yii\web\JsExpression;
  * @see http://leafletjs.com/reference.html#latlng
  * @see http://leafletjs.com/reference.html#bounds
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\types
  */
 class LatLng extends Type implements ArrayableInterface
@@ -37,19 +39,20 @@ class LatLng extends Type implements ArrayableInterface
     /**
      * @var float the latitude in degrees.
      */
-    public $lat;
+    public float $lat;
+    
     /**
      * @var float the longitude in degrees.
      */
-    public $lng;
+    public float $lng;
 
     /**
      * Initializes the object
      * @throws \yii\base\InvalidConfigException
      */
-    public function init()
+    public function init(): void
     {
-        if ($this->lat === null || $this->lng === null) {
+        if (!isset($this->lat) || !isset($this->lng)) {
             throw new InvalidConfigException("'lat' and 'lng' attributes cannot be empty.");
         }
     }
@@ -58,7 +61,7 @@ class LatLng extends Type implements ArrayableInterface
      * LatLng is and object to be used
      * @return \yii\web\JsExpression the js initialization code of the object
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         return new JsExpression("L.latLng($this->lat, $this->lng)"); // no semicolon
     }
@@ -70,7 +73,7 @@ class LatLng extends Type implements ArrayableInterface
      *
      * @return array|JsExpression
      */
-    public function toArray($encode = false)
+    public function toArray($encode = false): mixed
     {
         $latLng = [$this->lat, $this->lng];
 

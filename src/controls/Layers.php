@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet\controls;
 
@@ -17,10 +19,10 @@ use yii\web\JsExpression;
 /**
  * Layers The layers control gives users the ability to switch between different base layers and switch overlays on/off.
  *
- * @see http://leafletjs.com/reference.html#control-layers
+ * @see https://leafletjs.com/reference.html#control-layers
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\controls
  */
 class Layers extends Control
@@ -28,14 +30,14 @@ class Layers extends Control
     /**
      * @var \dosamigos\leaflet\layers\TileLayer[]
      */
-    private $_baseLayers = [];
+    private array $_baseLayers = [];
 
     /**
      * @param mixed $baseLayers
      *
      * @throws \yii\base\InvalidArgumentException
      */
-    public function setBaseLayers(array $baseLayers)
+    public function setBaseLayers(array $baseLayers): void
     {
         foreach ($baseLayers as $key => $layer) {
             if (!($layer instanceof TileLayer)) {
@@ -48,7 +50,7 @@ class Layers extends Control
     /**
      * @return \dosamigos\leaflet\layers\TileLayer[]
      */
-    public function getBaseLayers()
+    public function getBaseLayers(): array
     {
         return $this->_baseLayers;
     }
@@ -56,12 +58,12 @@ class Layers extends Control
     /**
      * @return array of encoded base layers
      */
-    public function getEncodedBaseLayers()
+    public function getEncodedBaseLayers(): array
     {
         $layers = [];
         foreach ($this->getBaseLayers() as $key => $layer) {
-            $layer->name = null;
-            $layers[$key] = new JsExpression(str_replace(";", "", $layer->encode()));
+            $layer->setName(null);
+            $layers[$key] = new JsExpression(str_replace(";", "", (string)$layer->encode()));
         }
         return $layers;
     }
@@ -69,14 +71,14 @@ class Layers extends Control
     /**
      * @var \dosamigos\leaflet\layers\Layer[]
      */
-    private $_overlays = [];
+    private array $_overlays = [];
 
     /**
      * @param \dosamigos\leaflet\layers\LayerGroup[] $overlays
      *
      * @throws \yii\base\InvalidArgumentException
      */
-    public function setOverlays($overlays)
+    public function setOverlays(array $overlays): void
     {
         foreach ($overlays as $key => $overlay) {
             if (!($overlay instanceof LayerGroup)) {
@@ -89,7 +91,7 @@ class Layers extends Control
     /**
      * @return \dosamigos\leaflet\layers\Layer[]
      */
-    public function getOverlays()
+    public function getOverlays(): array
     {
         return $this->_overlays;
     }
@@ -97,7 +99,7 @@ class Layers extends Control
     /**
      * @return array of encoded overlays
      */
-    public function getEncodedOverlays()
+    public function getEncodedOverlays(): array
     {
         $overlays = [];
         /**
@@ -113,13 +115,13 @@ class Layers extends Control
      * Returns the javascript ready code for the object to render
      * @return \yii\web\JsExpression
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $this->clientOptions['position'] = $this->position;
         $layers = $this->getEncodedBaseLayers();
         $overlays = $this->getEncodedOverlays();
         $options = $this->getOptions();
-        $name = $this->name;
+        $name = $this->getName();
         $map = $this->map;
 
         $layers = empty($layers) ? '{}' : Json::encode($layers, LeafLet::JSON_OPTIONS);

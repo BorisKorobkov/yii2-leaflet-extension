@@ -1,22 +1,24 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet\layers;
 
-
 use dosamigos\leaflet\types\LatLngBounds;
+use yii\helpers\Json;
 use yii\web\JsExpression;
 
 /**
  * ImageOverlay it is used to load and display a single image over specific bounds of the map
  *
- * @see http://leafletjs.com/reference.html#imageoverlay
+ * @see https://leafletjs.com/reference.html#imageoverlay
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package extensions\leafletjs\layers
  */
 /**
@@ -27,17 +29,17 @@ class ImageOverlay extends Layer
     /**
      * @var string the image Url
      */
-    public $imageUrl;
+    public ?string $imageUrl = null;
 
     /**
      * @var LatLngBounds
      */
-    private $_bounds;
+    private ?LatLngBounds $_bounds = null;
 
     /**
      * @param LatLngBounds $bounds
      */
-    public function setImageBounds(LatLngBounds $bounds)
+    public function setImageBounds(LatLngBounds $bounds): void
     {
         $this->_bounds = $bounds;
     }
@@ -45,7 +47,7 @@ class ImageOverlay extends Layer
     /**
      * @return LatLngBounds
      */
-    public function getImageBounds()
+    public function getImageBounds(): ?LatLngBounds
     {
         return $this->_bounds;
     }
@@ -54,19 +56,19 @@ class ImageOverlay extends Layer
      * Returns the javascript ready code for the object to render
      * @return \yii\web\JsExpression
      */
-    public function encode()
+    public function encode(): JsExpression
     {
-        $name = $this->name;
+        $name = $this->getName();
         $imageUrl = $this->imageUrl;
         $bounds = $this->getImageBounds()->encode();
         $options = $this->getOptions();
         $map = $this->map;
-        $js = "L.imageOverlay('$imageUrl', $bounds, $options)" . ($map !== null ? ".addTo($map);" : "");
+        $js = "L.imageOverlay(" . Json::encode($imageUrl) . ", $bounds, $options)" . ($map !== null ? ".addTo($map)" : "");
         if (!empty($name)) {
-            $js = "var $name = $js" . ($map !== null ? "" : ";");
+            $js = "var $name = $js;";
         }
+        $js .= $this->getEvents() . ($map !== null && empty($name) ? ";" : "");
 
         return new JsExpression($js);
     }
-
 }

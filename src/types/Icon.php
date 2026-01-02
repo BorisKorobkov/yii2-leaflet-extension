@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\types;
@@ -12,14 +14,13 @@ use yii\base\InvalidConfigException;
 use yii\helpers\Json;
 use yii\web\JsExpression;
 
-
 /**
  * Icon represents an icon to provide when creating a marker.
  *
- * @see http://leafletjs.com/reference.html#icon
+ * @see https://leafletjs.com/reference.html#icon
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\types
  */
 class Icon extends Type
@@ -41,57 +42,66 @@ class Icon extends Type
      * L.marker({icon: L.icon({...}), ...).addTo(map);
      * ```
      */
-    public $name;
+    public ?string $name = null;
+
     /**
      * @var string (required) the URL to the icon image (absolute or relative to your script path).
      */
-    public $iconUrl;
+    public ?string $iconUrl = null;
+
     /**
      * @var string the URL to a retina sized version of the icon image (absolute or relative to your script path). Used
      * for Retina screen devices.
      */
-    public $iconRetinaUrl;
+    public ?string $iconRetinaUrl = null;
+
     /**
      * @var string the URL to the icon shadow image. If not specified, no shadow image will be created.
      */
-    public $shadowUrl;
+    public ?string $shadowUrl = null;
+
     /**
      * @var string the URL to the retina sized version of the icon shadow image. If not specified, no shadow image will
      * be created. Used for Retina screen devices.
      */
-    public $shadowRetinaUrl;
+    public ?string $shadowRetinaUrl = null;
+
     /**
      * @var string a custom class name to assign to both icon and shadow images. Empty by default.
      */
-    public $className;
+    public ?string $className = null;
+
     /**
      * @var Point size of the icon image in pixels.
      */
-    private $_iconSize;
+    private ?Point $_iconSize = null;
     /**
      * @var Point the coordinates of the "tip" of the icon (relative to its top left corner). The icon will be aligned so
      * that this point is at the marker's geographical location. Centered by default if size is specified, also can be
      * set in CSS with negative margins.
      */
-    private $_iconAnchor;
+    private ?Point $_iconAnchor = null;
+
     /**
      * @var Point size of the shadow image in pixels.
      */
-    private $_shadowSize;
+    private ?Point $_shadowSize = null;
+
     /**
      * @var Point the coordinates of the "tip" of the shadow (relative to its top left corner) (the same as iconAnchor
      * if not specified).
      */
-    private $_shadowAnchor;
+    private ?Point $_shadowAnchor = null;
+    
     /**
      * @var Point the coordinates of the point from which popups will "open", relative to the icon anchor.
      */
-    private $_popupAnchor;
+    private ?Point $_popupAnchor = null;
 
     /**
      * @param Point $iconAnchor
      */
-    public function setIconAnchor(Point $iconAnchor)
+    public function setIconAnchor(Point $iconAnchor): void
     {
         $this->_iconAnchor = $iconAnchor;
     }
@@ -99,7 +109,7 @@ class Icon extends Type
     /**
      * @return Point
      */
-    public function getIconAnchor()
+    public function getIconAnchor(): ?Point
     {
         return $this->_iconAnchor;
     }
@@ -107,7 +117,7 @@ class Icon extends Type
     /**
      * @param Point $iconSize
      */
-    public function setIconSize(Point $iconSize)
+    public function setIconSize(Point $iconSize): void
     {
         $this->_iconSize = $iconSize;
     }
@@ -115,7 +125,7 @@ class Icon extends Type
     /**
      * @return Point
      */
-    public function getIconSize()
+    public function getIconSize(): ?Point
     {
         return $this->_iconSize;
     }
@@ -123,7 +133,7 @@ class Icon extends Type
     /**
      * @param Point $popupAnchor
      */
-    public function setPopupAnchor(Point $popupAnchor)
+    public function setPopupAnchor(Point $popupAnchor): void
     {
         $this->_popupAnchor = $popupAnchor;
     }
@@ -131,7 +141,7 @@ class Icon extends Type
     /**
      * @return Point
      */
-    public function getPopupAnchor()
+    public function getPopupAnchor(): ?Point
     {
         return $this->_popupAnchor;
     }
@@ -139,7 +149,7 @@ class Icon extends Type
     /**
      * @param Point $shadowAnchor
      */
-    public function setShadowAnchor(Point $shadowAnchor)
+    public function setShadowAnchor(Point $shadowAnchor): void
     {
         $this->_shadowAnchor = $shadowAnchor;
     }
@@ -147,7 +157,7 @@ class Icon extends Type
     /**
      * @return Point
      */
-    public function getShadowAnchor()
+    public function getShadowAnchor(): ?Point
     {
         return $this->_shadowAnchor;
     }
@@ -155,7 +165,7 @@ class Icon extends Type
     /**
      * @param Point $shadowSize
      */
-    public function setShadowSize(Point $shadowSize)
+    public function setShadowSize(Point $shadowSize): void
     {
         $this->_shadowSize = $shadowSize;
     }
@@ -163,7 +173,7 @@ class Icon extends Type
     /**
      * @return Point
      */
-    public function getShadowSize()
+    public function getShadowSize(): ?Point
     {
         return $this->_shadowSize;
     }
@@ -172,7 +182,7 @@ class Icon extends Type
      * Initializes the object
      * @throws \yii\base\InvalidConfigException
      */
-    public function init()
+    public function init(): void
     {
         if (empty($this->iconUrl)) {
             throw new InvalidConfigException("'iconUrl' attribute cannot be empty.");
@@ -182,7 +192,7 @@ class Icon extends Type
     /**
      * @return string the js initialization code of the object
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $options = Json::encode($this->getOptions(), LeafLet::JSON_OPTIONS);
 
@@ -196,7 +206,7 @@ class Icon extends Type
     /**
      * @return array the configuration options of the array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         $options = [];
         $class = new \ReflectionClass(__CLASS__);

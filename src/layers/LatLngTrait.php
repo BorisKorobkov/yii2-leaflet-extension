@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet\layers;
 
@@ -13,12 +15,12 @@ trait LatLngTrait
     /**
      * @var \dosamigos\leaflet\types\LatLng holds the latitude and longitude values.
      */
-    private $_latLon;
+    private ?LatLng $_latLon = null;
 
     /**
      * @param \dosamigos\leaflet\types\LatLng $latLon the position to render the marker
      */
-    public function setLatLng(LatLng $latLon)
+    public function setLatLng(LatLng $latLon): void
     {
         $this->_latLon = $latLon;
     }
@@ -26,7 +28,7 @@ trait LatLngTrait
     /**
      * @return \dosamigos\leaflet\types\LatLng
      */
-    public function getLatLng()
+    public function getLatLng(): ?LatLng
     {
         return $this->_latLon;
     }

@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\controls;
@@ -10,6 +12,7 @@ namespace dosamigos\leaflet\controls;
 use dosamigos\leaflet\LeafLet;
 use yii\base\Component;
 use yii\helpers\Json;
+use yii\web\JsExpression;
 
 /**
  * Control is the base class for all Controls
@@ -17,8 +20,8 @@ use yii\helpers\Json;
  * @property string $name
  *
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\controls
  */
 abstract class Control extends Component
@@ -27,23 +30,26 @@ abstract class Control extends Component
      * @var string the name of the javascript variable that will hold the reference
      * to the map object.
      */
-    public $map;
+
+    public ?string $map = null;
     /**
      * @var string the initial position of the control (one of the map corners).
      */
-    public $position = 'topright';
+    public string $position = 'topright';
+
     /**
      * @var array the options for the underlying LeafLetJs JS component.
      * Please refer to the LeafLetJs api reference for possible
-     * [options](http://leafletjs.com/reference.html).
+     * [options](https://leafletjs.com/reference.html).
      */
-    public $clientOptions = [];
+    public array $clientOptions = [];
+ 
     /**
      * @var string the variable name. If not null, then the js creation script
      * will be returned as a variable. If null, then the js creation script will
      * be returned as a constructor that you can use on other object's configuration options.
      */
-    private $_name;
+    private ?string $_name = null;
 
     /**
      * Returns the name of the layer.
@@ -52,7 +58,7 @@ abstract class Control extends Component
      *
      * @return string name of the layer.
      */
-    public function getName($autoGenerate = false)
+    public function getName(bool $autoGenerate = false): ?string
     {
         if ($autoGenerate && $this->_name === null) {
             $this->_name = LeafLet::generateName();
@@ -65,16 +71,16 @@ abstract class Control extends Component
      *
      * @param string $value name of the layer.
      */
-    public function setName($value)
+    public function setName(string $value): void
     {
         $this->_name = $value;
     }
 
     /**
      * Returns the processed js options
-     * @return array
+     * @return string
      */
-    public function getOptions()
+    public function getOptions(): string
     {
         return empty($this->clientOptions) ? '{}' : Json::encode($this->clientOptions, LeafLet::JSON_OPTIONS);
     }
@@ -83,5 +89,5 @@ abstract class Control extends Component
      * Returns the javascript ready code for the object to render
      * @return \yii\web\JsExpression
      */
-    abstract public function encode();
+    abstract public function encode(): JsExpression;
 }

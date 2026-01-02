@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\layers;
@@ -13,10 +15,10 @@ use yii\web\JsExpression;
 /**
  * Rectangle a class for drawing rectangle overlays on a map.
  *
- * @see http://leafletjs.com/reference.html#rectangle
+ * @see https://leafletjs.com/reference.html#rectangle
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\layers
  */
 /**
@@ -31,39 +33,40 @@ class Rectangle extends Layer
     /**
      * @var LatLngBounds
      */
-    private $_bounds;
+    private ?LatLngBounds $_bounds = null;
 
     /**
      * @param LatLngBounds $bounds
      */
-    public function setBounds(LatLngBounds $bounds)
+    public function setBounds(LatLngBounds $bounds): void
     {
-        $bounds->name = null;
+        $bounds->name = null; // LatLngBounds has public $name
         $this->_bounds = $bounds;
     }
 
     /**
      * @return LatLngBounds
      */
-    public function getBounds()
+    public function getBounds(): ?LatLngBounds
     {
         return $this->_bounds;
     }
 
     /**
      * Returns the javascript ready code for the object to render
-     * @return string
+     * @return JsExpression
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $bounds = $this->getBounds()->encode();
         $options = $this->getOptions();
-        $name = $this->name;
+        $name = $this->getName();
         $map = $this->map;
-        $js = $this->bindPopupContent("L.rectangle($bounds, $options)") . ($map !== null ? ".addTo($map);" : "");
+        $js = $this->bindPopupContent("L.rectangle($bounds, $options)") . ($map !== null ? ".addTo($map)" : "");
         if (!empty($name)) {
-            $js = "var $name = $js" . ($map !== null ? "" : ";");
+            $js = "var $name = $js;";
         }
+        $js .= $this->getEvents() . ($map !== null && empty($name) ? ";" : "");
         return new JsExpression($js);
     }
 

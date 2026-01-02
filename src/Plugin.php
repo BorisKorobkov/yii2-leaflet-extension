@@ -1,14 +1,17 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet;
 
 use yii\base\Component;
 use yii\helpers\Json;
+use yii\web\View;
 
 /**
  * @property string $name
@@ -18,8 +21,8 @@ use yii\helpers\Json;
  * Plugin is the abstract class where all plugins should extend from
  *
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet
  */
 abstract class Plugin extends Component
@@ -27,24 +30,27 @@ abstract class Plugin extends Component
     /**
      * @var string the map name
      */
-    public $map;
+    public ?string $map = null;
+    
     /**
      * @var array the options for the underlying LeafLetJs JS component.
      * Please refer to the LeafLetJs api reference for possible
      * [options](http://leafletjs.com/reference.html).
      */
-    public $clientOptions = [];
+    public array $clientOptions = [];
+
     /**
      * @var array the event handlers for the underlying LeafletJs JS plugin.
      * Please refer to the LeafLetJs js api object options for possible events.
      */
-    public $clientEvents = [];
+    public array $clientEvents = [];
+    
     /**
      * @var string the variable name. If not null, then the js creation script
      * will be returned as a variable. If null, then the js creation script will
      * be returned as a constructor that you can use on other object's configuration options.
      */
-    private $_name;
+    private ?string $_name = null;
 
     /**
      * Returns the name of the layer.
@@ -53,7 +59,7 @@ abstract class Plugin extends Component
      *
      * @return string name of the layer.
      */
-    public function getName($autoGenerate = false)
+    public function getName(bool $autoGenerate = false): ?string
     {
         if ($autoGenerate && $this->_name === null) {
             $this->_name = LeafLet::generateName();
@@ -66,7 +72,7 @@ abstract class Plugin extends Component
      *
      * @param string $value name of the layer.
      */
-    public function setName($value)
+    public function setName(string $value): void
     {
         $this->_name = $value;
     }
@@ -75,7 +81,7 @@ abstract class Plugin extends Component
      * Returns the processed js options
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): string
     {
         return empty($this->clientOptions) ? '{}' : Json::encode($this->clientOptions, LeafLet::JSON_OPTIONS);
     }
@@ -83,11 +89,11 @@ abstract class Plugin extends Component
     /**
      * @return string the processed js events
      */
-    public function getEvents()
+    public function getEvents(): string
     {
         $js = [];
-        if (!empty($this->name) && !empty($this->clientEvents)) {
-            $name = $this->name;
+        $name = $this->getName();
+        if (!empty($name) && !empty($this->clientEvents)) {
             foreach ($this->clientEvents as $event => $handler) {
                 $js[] = "$name.on('$event', $handler);";
             }
@@ -99,20 +105,20 @@ abstract class Plugin extends Component
      * Returns the plugin name
      * @return string
      */
-    abstract public function getPluginName();
+    abstract public function getPluginName(): string;
 
     /**
      * Registers plugin asset bundle
      *
-     * @param \yii\web\View $view
+     * @param View $view
      *
-     * @return mixed
+     * @return void
      */
-    abstract public function registerAssetBundle($view);
+    abstract public function registerAssetBundle(View $view): void;
 
     /**
      * Returns the javascript ready code for the object to render
-     * @return \yii\web\JsExpression
+     * @return string
      */
-    abstract public function encode();
+    abstract public function encode(): string;
 }

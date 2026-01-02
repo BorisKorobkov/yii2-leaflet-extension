@@ -1,12 +1,13 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\types;
-
 
 /**
  * Arrayable should be implemented by classes that need to be represented in array format.
@@ -22,5 +23,5 @@ interface ArrayableInterface
      *
      * @return array the array representation of this object
      */
-    public function toArray($encode = false);
+    public function toArray($encode = false): mixed;
 }

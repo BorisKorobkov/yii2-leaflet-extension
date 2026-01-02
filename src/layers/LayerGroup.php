@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet\layers;
-
 
 use yii\base\Component;
 use yii\base\InvalidArgumentException;
@@ -16,10 +17,10 @@ use yii\web\JsExpression;
 /**
  * LayerGroup Used to group several layers and handle them as one.
  *
- * @see http://leafletjs.com/reference.html#layergroup
+ * @see https://leafletjs.com/reference.html#layergroup
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\layers
  */
 class LayerGroup extends Component
@@ -30,12 +31,12 @@ class LayerGroup extends Component
      * @var string the name of the javascript variable that will hold the reference
      * to the map object.
      */
-    public $map;
+    public ?string $map = null;
 
     /**
      * @var Layer[]
      */
-    private $_layers = [];
+    private array $_layers = [];
 
     /**
      * Adds a layer to the group. If no name given it will be automatically generated.
@@ -45,7 +46,7 @@ class LayerGroup extends Component
      * @return $this
      * @throws \yii\base\InvalidArgumentException
      */
-    public function addLayer(Layer $layer)
+    public function addLayer(Layer $layer): self
     {
         if (($layer instanceof Popup) || ($layer instanceof TileLayer)) {
             throw new InvalidArgumentException("'\$layer' cannot be of type Popup or TileLayer.");
@@ -63,7 +64,7 @@ class LayerGroup extends Component
      *
      * @return mixed
      */
-    public function getLayer($name)
+    public function getLayer(string $name): mixed
     {
         return ArrayHelper::getValue($this->_layers, $name);
     }
@@ -75,7 +76,7 @@ class LayerGroup extends Component
      *
      * @return mixed|null
      */
-    public function removeLayer($name)
+    public function removeLayer(string $name): mixed
     {
         return ArrayHelper::remove($this->_layers, $name);
     }
@@ -83,7 +84,7 @@ class LayerGroup extends Component
     /**
      * @return Layer[] the added layers
      */
-    public function getLayers()
+    public function getLayers(): array
     {
         return $this->_layers;
     }
@@ -91,7 +92,7 @@ class LayerGroup extends Component
     /**
      * @return JsExpression
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $js = [];
         $layers = $this->getLayers();
@@ -115,14 +116,14 @@ class LayerGroup extends Component
      * Returns the initialization
      * @return JsExpression
      */
-    public function oneLineEncode()
+    public function oneLineEncode(): JsExpression
     {
         $map = $this->map;
         $layers = $this->getLayers();
         $layersJs = [];
         /** @var \dosamigos\leaflet\layers\Layer $layer */
         foreach ($layers as $layer) {
-            $layer->name = null;
+            $layer->setName(null);
             $layersJs[] = $layer->encode();
         }
         $js = "L.layerGroup([" . implode(",", $layersJs) . "])" . ($map !== null ? ".addTo($map);" : "");

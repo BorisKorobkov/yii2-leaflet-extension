@@ -1,29 +1,35 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet;
 
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
+use yii\web\View;
 
 class PluginManager extends Component
 {
-    private $_plugins = [];
+    /**
+     * @var Plugin[]
+     */
+    private array $_plugins = [];
 
     /**
      * Check whether we have a plugin installed with that name previous firing up the call
      *
      * @param string $name
      *
-     * @return mixed|void
+     * @return mixed
      */
-    public function __get($name)
+    public function __get($name): mixed
     {
-        if (ArrayHelper::keyExists($name, $this->getInstalledPlugins())) {
-            return $this->getPlugin($name);
+        if (isset($this->_plugins[$name])) {
+            return $this->_plugins[$name];
         }
         return parent::__get($name);
     }
@@ -35,9 +41,10 @@ class PluginManager extends Component
      *
      * @return void
      */
-    public function install(Plugin $plugin)
+    public function install(Plugin $plugin): void
     {
-        $this->_plugins[$plugin->name] = $plugin;
+        $name = $plugin->getName(true);
+        $this->_plugins[$name] = $plugin;
     }
 
     /**
@@ -45,18 +52,23 @@ class PluginManager extends Component
      *
      * @param Plugin $plugin
      *
-     * @return mixed|null the value of the element if found, default value otherwise
+     * @return mixed the value of the element if found, default value otherwise
      */
-    public function remove(Plugin $plugin)
+    public function remove(Plugin $plugin): mixed
     {
-        return ArrayHelper::remove($this->_plugins, $plugin->name);
+        $name = $plugin->getName();
+        if ($name !== null) {
+            return ArrayHelper::remove($this->_plugins, $name);
+        }
+        return null;
     }
 
     /**
-     * @param \yii\web\View $view
+     * @param View $view
      * Registers plugin bundles
+     * @return void
      */
-    public function registerAssetBundles($view)
+    public function registerAssetBundles(View $view): void
     {
         foreach ($this->_plugins as $plugin) {
             $plugin->registerAssetBundle($view);
@@ -66,7 +78,7 @@ class PluginManager extends Component
     /**
      * @return array of installed plugins
      */
-    public function getInstalledPlugins()
+    public function getInstalledPlugins(): array
     {
         return $this->_plugins;
     }
@@ -78,8 +90,8 @@ class PluginManager extends Component
      *
      * @return Plugin|null
      */
-    public function getPlugin($name)
+    public function getPlugin($name): ?Plugin
     {
-        return isset($this->_plugins[$name]) ? $this->_plugins[$name] : null;
+        return $this->_plugins[$name] ?? null;
     }
 }

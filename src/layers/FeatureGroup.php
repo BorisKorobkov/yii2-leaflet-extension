@@ -1,12 +1,13 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\layers;
-
 
 use yii\helpers\Json;
 use yii\web\JsExpression;
@@ -14,10 +15,10 @@ use yii\web\JsExpression;
 /**
  * FeatureGroup
  *
- * @see http://leafletjs.com/reference.html#featuregroup
+ * @see https://leafletjs.com/reference.html#featuregroup
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\layers
  */
 /**
@@ -29,19 +30,19 @@ class FeatureGroup extends LayerGroup
 
     /**
      * @var array the event handlers for the underlying LeafletJs featureGroup JS plugin.
-     * Please refer to the [LeafLetJs::featureGroup](http://leafletjs.com/reference.html#featuregroup)
+     * Please refer to the [LeafLetJs::featureGroup](https://leafletjs.com/reference.html#featuregroup)
      * js api object options for possible events.
      */
-    public $clientEvents = [];
+    public array $clientEvents = [];
 
     /**
      * @return JsExpression
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $js = [];
         $layers = $this->getLayers();
-        $name = $this->name;
+        $name = $this->getName();
         $names = str_replace(array('"', "'"), "", Json::encode(array_keys($layers)));
         $map = $this->map;
         foreach ($layers as $layer) {
@@ -60,7 +61,8 @@ class FeatureGroup extends LayerGroup
     /**
      * @inheritdoc
      */
-    public function oneLineEncode() {
+    public function oneLineEncode(): JsExpression
+    {
         $map = $this->map;
         $layers = $this->getLayers();
         $layersJs = [];
@@ -78,7 +80,7 @@ class FeatureGroup extends LayerGroup
     /**
      * @return string the processed js events
      */
-    protected function getEvents()
+    protected function getEvents(): string
     {
         $js = [];
         if (!empty($this->clientEvents)) {

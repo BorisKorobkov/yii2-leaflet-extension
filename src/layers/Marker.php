@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet\layers;
 
@@ -13,10 +15,10 @@ use yii\web\JsExpression;
 /**
  * Marker is used to put a marker on the map
  *
- * @see http://leafletjs.com/reference.html#circle
+ * @see https://leafletjs.com/reference.html#marker
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\layers
  */
 /**
@@ -35,7 +37,7 @@ class Marker extends Layer
      *
      * @param Icon $icon
      */
-    public function setIcon($icon) //Icon - if you force the icon as type, the makimarker won't work...:(
+    public function setIcon($icon): void //Icon - if you force the icon as type, the makimarker won't work...:(
     {
         $this->clientOptions['icon'] = $icon;
     }
@@ -43,7 +45,7 @@ class Marker extends Layer
     /**
      * @return \dosamigos\leaflet\types\Icon
      */
-    public function getIcon()
+    public function getIcon(): ?Icon
     {
         return isset($this->clientOptions['icon']) ? $this->clientOptions['icon'] : null;
     }
@@ -52,10 +54,10 @@ class Marker extends Layer
      * Initializes the marker.
      * @throws \yii\base\InvalidConfigException
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
-        if (empty($this->latLng)) {
+        if ($this->getLatLng() === null) {
             throw new InvalidConfigException("'latLng' attribute cannot be empty.");
         }
     }
@@ -63,7 +65,7 @@ class Marker extends Layer
     /**
      * @return \yii\web\JsExpression the marker constructor string
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $latLon = $this->getLatLng()->toArray(true);
         $options = $this->getOptions();

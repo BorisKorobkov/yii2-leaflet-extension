@@ -1,33 +1,34 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\layers;
 
-
 use yii\base\InvalidConfigException;
+use yii\helpers\Json;
 use yii\web\JsExpression;
 
 /**
  * TileLayer is used to load and display tile layers on the map
  *
- * @see http://leafletjs.com/reference.html#tilelayer
+ * @see https://leafletjs.com/reference.html#tilelayer
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\layers
  */
 class TileLayer extends Layer
 {
-
     /**
      * @var string a template has the following form:
      *
      * ```
-     * 'http://{s}.somedomain.com/blabla/{z}/{x}/{y}.png'
+     * 'https://{s}.somedomain.com/blabla/{z}/{x}/{y}.png'
      * ```
      *
      * {s} means one of the available subdomains (used sequentially to help with browser parallel requests per domain
@@ -38,14 +39,14 @@ class TileLayer extends Layer
      *
      * ```
      * $layer = new TileLayer([
-     *    'urlTemplate' => 'L.tileLayer('http://{s}.somedomain.com/{foo}/{z}/{x}/{y}.png',
+     *    'urlTemplate' => 'L.tileLayer('https://{s}.somedomain.com/{foo}/{z}/{x}/{y}.png',
      *    'clientOptions' => [
      *        'foo' => 'bar'
      *    ]
      * ]);
      * ```
      */
-    public $urlTemplate;
+    public string $urlTemplate = '';
 
     /**
      * @throws \yii\base\InvalidConfigException
@@ -59,18 +60,18 @@ class TileLayer extends Layer
     }
 
     /**
-     * @return \yii\web\JsExpression the marker constructor string
+     * @return \yii\web\JsExpression
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $options = $this->getOptions();
         $name = $this->getName();
         $map = $this->map;
-        $js = "L.tileLayer('$this->urlTemplate', $options)" . ($map !== null ? ".addTo($map);" : "");
+        $js = "L.tileLayer(" . Json::encode($this->urlTemplate) . ", $options)" . ($map !== null ? ".addTo($map)" : "");
         if (!empty($name)) {
-            $js = "var $name = $js" . ($map !== null ? "" : ";");
-            $js .= $this->getEvents();
+            $js = "var $name = $js;";
         }
+        $js .= $this->getEvents() . ($map !== null && empty($name) ? ";" : "");
 
         return new JsExpression($js);
     }

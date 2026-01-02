@@ -1,25 +1,27 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet;
 
 use yii\web\AssetBundle;
 
 /**
- * LeafLetAsset Registers widget requires files. Please, use the following in order to override bundles for CDN:
+ * LeafLetAsset registers widget required files. Please, use the following in order to override bundles for CDN:
  *
  * ```
  *  return [
  *        // ...
  *        'components' => [
  *            'bundles' => [
- *                'dosamigos\leaftlet\LeafLetAsset' => [
+ *                'dosamigos\leaflet\LeafLetAsset' => [
  *                    'sourcePath' => null,
- *                    'js' => [ 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js' ],
- *                    'css' => [ 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css' ]
+ *                    'js' => [ 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js' ],
+ *                    'css' => [ 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' ]
  *                ]
  *            ]
  *        ]
@@ -27,19 +29,19 @@ use yii\web\AssetBundle;
  * ```
  *
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet
  */
 class LeafLetAsset extends AssetBundle
 {
-    public $sourcePath = '@npm/leaflet/dist';
+    public ?string $sourcePath = '@npm/leaflet/dist';
 
-    public $css = [
+    public array $css = [
         'leaflet.css'
     ];
 
-    public $js = [
+    public array $js = [
         'leaflet-src.js'
     ];
 }

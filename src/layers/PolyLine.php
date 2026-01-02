@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\layers;
@@ -17,7 +19,7 @@ use yii\web\JsExpression;
 /**
  * PolyLine is a class for drawing a polygon overlay on the map.
  *
- * @see http://leafletjs.com/reference.html#polyline
+ * @see https://leafletjs.com/reference.html#polyline
  * @package dosamigos\leaflet\layers
  */
 /**
@@ -32,18 +34,19 @@ class PolyLine extends Layer
     /**
      * @var LatLng[]
      */
-    private $_latLngs = [];
+    private array $_latLngs = [];
+
     /**
      * @var LatLngBounds
      */
-    private $_bounds;
+    private ?LatLngBounds $_bounds = null;
 
     /**
      * @param array $latLngs
      *
      * @throws \yii\base\InvalidArgumentException
      */
-    public function setLatLngs(array $latLngs)
+    public function setLatLngs(array $latLngs): void
     {
         foreach ($latLngs as $latLng) {
             if (!($latLng instanceof LatLng)) {
@@ -57,7 +60,7 @@ class PolyLine extends Layer
     /**
      * @return \dosamigos\leaflet\types\LatLng[]
      */
-    public function getLatLngs()
+    public function getLatLngs(): array
     {
         return $this->_latLngs;
     }
@@ -66,7 +69,7 @@ class PolyLine extends Layer
      * Returns the latLngs as array objects
      * @return array
      */
-    public function getLatLngstoArray()
+    public function getLatLngstoArray(): array
     {
         $latLngs = [];
         foreach ($this->getLatLngs() as $latLng) {
@@ -79,7 +82,7 @@ class PolyLine extends Layer
      * Returns the LatLngBounds of the polyline.
      * @return LatLngBounds
      */
-    public function getBounds()
+    public function getBounds(): ?LatLngBounds
     {
         return $this->_bounds;
     }
@@ -87,26 +90,27 @@ class PolyLine extends Layer
     /**
      * Sets bounds after initialization of the [[LatLng]] objects that compound the polyline.
      */
-    protected function setBounds()
+    protected function setBounds(): void
     {
         $this->_bounds = LatLngBounds::getBoundsOfLatLngs($this->getLatLngs());
     }
 
     /**
      * Returns the javascript ready code for the object to render
-     * @return string
+     * @return JsExpression
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $latLngs = Json::encode($this->getLatLngstoArray(), LeafLet::JSON_OPTIONS);
         $options = $this->getOptions();
-        $name = $this->name;
+        $name = $this->getName();
         $map = $this->map;
-        $js = $this->bindPopupContent("L.polyline($latLngs, $options)") . ($map !== null ? ".addTo($map);" : "");
+        $js = $this->bindPopupContent("L.polyline($latLngs, $options)") . ($map !== null ? ".addTo($map)" : "");
         if (!empty($name)) {
-            $js = "var $name = $js" . ($map !== null ? "" : ";");
+            $js = "var $name = $js;";
         }
 
+        $js .= $this->getEvents() . ($map !== null && empty($name) ? ";" : "");
         return new JsExpression($js);
     }
 

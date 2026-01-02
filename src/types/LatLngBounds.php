@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet\types;
 
@@ -13,10 +15,10 @@ use yii\web\JsExpression;
 /**
  * LatLngBounds represents a rectangular geographical area on a map.
  *
- * @see http://leafletjs.com/reference.html#latlngbounds
+ * @see https://leafletjs.com/reference.html#latlngbounds
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\types
  */
 
@@ -42,20 +44,22 @@ class LatLngBounds extends Type
      * L.map({maxBounds: L.latLngBounds(...));
      * ```
      */
-    public $name;
+    public ?string $name = null;
+
     /**
      * @var LatLng the southWest boundary
      */
-    private $_southWest;
+    private ?LatLng $_southWest = null;
+    
     /**
      * @var LatLng the northEast boundary
      */
-    private $_northEast;
+    private ?LatLng $_northEast = null;
 
     /**
      * @return LatLng
      */
-    public function getSouthWest()
+    public function getSouthWest(): ?LatLng
     {
         return $this->_southWest;
     }
@@ -63,7 +67,7 @@ class LatLngBounds extends Type
     /**
      * @param LatLng $latLng
      */
-    public function setSouthWest(LatLng $latLng)
+    public function setSouthWest(LatLng $latLng): void
     {
         $this->_southWest = $latLng;
     }
@@ -71,7 +75,7 @@ class LatLngBounds extends Type
     /**
      * @return LatLng
      */
-    public function getNorthEast()
+    public function getNorthEast(): ?LatLng
     {
         return $this->_northEast;
     }
@@ -79,7 +83,7 @@ class LatLngBounds extends Type
     /**
      * @param LatLng $latLng
      */
-    public function setNorthEast(LatLng $latLng)
+    public function setNorthEast(LatLng $latLng): void
     {
         $this->_northEast = $latLng;
     }
@@ -88,7 +92,7 @@ class LatLngBounds extends Type
      * Initializes the class
      * @throws \yii\base\InvalidConfigException
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         if (empty($this->southWest) || empty($this->northEast)) {
@@ -99,7 +103,7 @@ class LatLngBounds extends Type
     /**
      * @return \yii\web\JsExpression the js initialization code of the object
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $southWest = $this->getSouthWest()->toArray(true);
         $northEast = $this->getNorthEast()->toArray(true);
@@ -118,7 +122,7 @@ class LatLngBounds extends Type
      *
      * @return LatLngBounds
      */
-    public static function getBoundsOfLatLngs(array $latLngs, $margin = 0)
+    public static function getBoundsOfLatLngs(array $latLngs, $margin = 0): LatLngBounds
     {
         $min_lat = 1000;
         $max_lat = -1000;

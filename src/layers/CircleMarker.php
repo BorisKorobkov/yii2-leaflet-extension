@@ -1,22 +1,23 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 namespace dosamigos\leaflet\layers;
-
 
 use yii\web\JsExpression;
 
 /**
  * CircleMarker is a circle of a fixed size with radius specified in pixels. Setting its radius wont change its size.
  *
- * @see http://leafletjs.com/reference.html#circlemarker
+ * @see https://leafletjs.com/reference.html#circlemarker
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
- * @link http://www.ramirezcobos.com/
- * @link http://www.2amigos.us/
+ * @link https://www.ramirezcobos.com/
+ * @link https://www.2amigos.us/
  * @package dosamigos\leaflet\layers
  */
 /**
@@ -28,17 +29,17 @@ class CircleMarker extends Circle
      * Returns the javascript ready code for the object to render
      * @return JsExpression
      */
-    public function encode()
+    public function encode(): JsExpression
     {
         $bounds = $this->getLatLng()->toArray(true);
         $options = $this->getOptions();
-        $name = $this->name;
+        $name = $this->getName();
         $map = $this->map;
-        $js = $this->bindPopupContent("L.circleMarker($bounds, $options)") . ($map !== null ? ".addTo($map);" : "");
+        $js = $this->bindPopupContent("L.circleMarker($bounds, $options)") . ($map !== null ? ".addTo($map)" : "");
         if (!empty($name)) {
-            $js = "var $name = $js" . ($map !== null ? "" : ";");
+            $js = "var $name = $js;";
         }
+        $js .= $this->getEvents() . ($map !== null && empty($name) ? ";" : "");
         return new JsExpression($js);
     }
-
 }

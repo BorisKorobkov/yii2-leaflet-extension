@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
- * @link http://2amigos.us
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @link https://2amigos.us
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 namespace dosamigos\leaflet\layers;
 
@@ -10,6 +12,7 @@ use dosamigos\leaflet\LeafLet;
 use yii\base\Component;
 use dosamigos\leaflet\types\Type;
 use yii\helpers\Json;
+use yii\web\JsExpression;
 
 /**
  * Layer is the base class for UI Layers
@@ -20,31 +23,32 @@ use yii\helpers\Json;
  */
 abstract class Layer extends Component
 {
-
     use NameTrait;
 
     /**
      * @var string the name of the javascript variable that will hold the reference
      * to the map object.
      */
-    public $map;
+    public ?string $map = null;
+
     /**
      * @var array the options for the underlying LeafLetJs JS component.
      * Please refer to the LeafLetJs api reference for possible
-     * [options](http://leafletjs.com/reference.html).
+     * [options](https://leafletjs.com/reference.html).
      */
-    public $clientOptions = [];
+    public array $clientOptions = [];
+
     /**
      * @var array the event handlers for the underlying LeafletJs JS plugin.
      * Please refer to the LeafLetJs js api object options for possible events.
      */
-    public $clientEvents = [];
+    public array $clientEvents = [];
 
     /**
      * Returns the processed js options
-     * @return array
+     * @return string
      */
-    public function getOptions()
+    public function getOptions(): string
     {
         $options = [];
         foreach ($this->clientOptions as $key => $option) {
@@ -59,28 +63,26 @@ abstract class Layer extends Component
     /**
      * @return string the processed js events
      */
-    public function getEvents()
+    public function getEvents(): string
     {
         $js = [];
         if (!empty($this->clientEvents)) {
-            if (!empty($this->name)) {
-                $name = $this->name;
-                $js[] = "{$name}";
-                foreach ($this->clientEvents as $event => $handler) {
-                    $js[] = ".on('$event', $handler)";
-                }
-            } else {
-                foreach ($this->clientEvents as $event => $handler) {
-                    $js[] = ".on('$event', $handler)";
-                }
+            $name = $this->getName();
+            if (!empty($name)) {
+                $js[] = $name;
+            }
+            foreach ($this->clientEvents as $event => $handler) {
+                $js[] = ".on(" . Json::encode($event) . ", $handler)";
             }
         }
-        return !empty($js) ? implode("", $js) . ($this->name !== null ? ";" : "") : "";
+
+        $code = implode("", $js);
+        return (!empty($code) && !empty($this->getName())) ? $code . ";" : $code;
     }
 
     /**
      * Returns the javascript ready code for the object to render
      * @return \yii\web\JsExpression
      */
-    abstract public function encode();
+    abstract public function encode(): JsExpression;
 }

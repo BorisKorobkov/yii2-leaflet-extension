@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * @link https://github.com/2amigos/yii2-leaflet-extension
  * @copyright Copyright (c) 2013-2015 2amigOS! Consulting Group LLC
