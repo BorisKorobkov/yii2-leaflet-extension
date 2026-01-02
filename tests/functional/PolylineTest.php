@@ -134,7 +134,7 @@ class PolylineTest extends TestCase
     public function testException() {
         $polyline = new PolyLine(['map' => 'testMap']);
 
-        $this->setExpectedException('yii\base\InvalidParamException');
+        $this->setExpectedException('yii\base\InvalidArgumentException');
         $polyline->setLatLngs(['wrongValue']);
     }
 }

@@ -86,7 +86,7 @@ class TypesTest extends TestCase
 
         $this->assertEquals($bounds1, $bounds2);
 
-        $this->setExpectedException('yii\base\InvalidParamException');
+        $this->setExpectedException('yii\base\InvalidArgumentException');
         LatLngBounds::getBoundsOfLatLngs(['wrong']);
     }
 

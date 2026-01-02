@@ -10,7 +10,7 @@ namespace dosamigos\leaflet\controls;
 use dosamigos\leaflet\layers\LayerGroup;
 use dosamigos\leaflet\layers\TileLayer;
 use dosamigos\leaflet\LeafLet;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\helpers\Json;
 use yii\web\JsExpression;
 
@@ -33,13 +33,13 @@ class Layers extends Control
     /**
      * @param mixed $baseLayers
      *
-     * @throws \yii\base\InvalidParamException
+     * @throws \yii\base\InvalidArgumentException
      */
     public function setBaseLayers(array $baseLayers)
     {
         foreach ($baseLayers as $key => $layer) {
             if (!($layer instanceof TileLayer)) {
-                throw new InvalidParamException("All baselayers should be of type TileLayer ");
+                throw new InvalidArgumentException("All baselayers should be of type TileLayer ");
             }
             $this->_baseLayers[$key] = $layer;
         }
@@ -74,13 +74,13 @@ class Layers extends Control
     /**
      * @param \dosamigos\leaflet\layers\LayerGroup[] $overlays
      *
-     * @throws \yii\base\InvalidParamException
+     * @throws \yii\base\InvalidArgumentException
      */
     public function setOverlays($overlays)
     {
         foreach ($overlays as $key => $overlay) {
             if (!($overlay instanceof LayerGroup)) {
-                throw new InvalidParamException("All overlays should be of type LayerGroup");
+                throw new InvalidArgumentException("All overlays should be of type LayerGroup");
             }
             $this->_overlays[$key] = $overlay;
         }

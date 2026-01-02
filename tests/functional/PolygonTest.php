@@ -134,7 +134,7 @@ class PolygonTest extends TestCase
     public function testException() {
         $polygon = new Polygon(['map' => 'testMap']);
 
-        $this->setExpectedException('yii\base\InvalidParamException');
+        $this->setExpectedException('yii\base\InvalidArgumentException');
         $polygon->setLatLngs(['wrongValue']);
     }
 }

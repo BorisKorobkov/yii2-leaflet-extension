@@ -15,7 +15,7 @@ class LayerGroupLayerTest extends TestCase
 {
     public function testException()
     {
-        $this->setExpectedException('yii\base\InvalidParamException');
+        $this->setExpectedException('yii\base\InvalidArgumentException');
         $layerGroup = new LayerGroup();
         $popup = new Popup(['latLng' => new LatLng(['lat' => 51.508, 'lng' => -0.11])]);
         $layerGroup->addLayer($popup);

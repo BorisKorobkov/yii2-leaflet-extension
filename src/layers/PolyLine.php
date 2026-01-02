@@ -10,7 +10,7 @@ namespace dosamigos\leaflet\layers;
 use dosamigos\leaflet\LeafLet;
 use dosamigos\leaflet\types\LatLng;
 use dosamigos\leaflet\types\LatLngBounds;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\helpers\Json;
 use yii\web\JsExpression;
 
@@ -41,13 +41,13 @@ class PolyLine extends Layer
     /**
      * @param array $latLngs
      *
-     * @throws \yii\base\InvalidParamException
+     * @throws \yii\base\InvalidArgumentException
      */
     public function setLatLngs(array $latLngs)
     {
         foreach ($latLngs as $latLng) {
             if (!($latLng instanceof LatLng)) {
-                throw new InvalidParamException("Wrong parameter. All items should be of type LatLng.");
+                throw new InvalidArgumentException("Wrong parameter. All items should be of type LatLng.");
             }
         }
         $this->_latLngs = $latLngs;

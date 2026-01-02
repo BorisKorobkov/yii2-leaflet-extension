@@ -15,7 +15,7 @@ use dosamigos\leaflet\types\LatLng;
 use dosamigos\leaflet\widgets\Map;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -102,13 +102,13 @@ class LeafLet extends Component
     /**
      * @param \dosamigos\leaflet\controls\Control[] $controls
      *
-     * @throws \yii\base\InvalidParamException
+     * @throws \yii\base\InvalidArgumentException
      */
     public function setControls(array $controls)
     {
         foreach ($controls as $control) {
             if (!($control instanceof Control)) {
-                throw new InvalidParamException("All controls must be of type Control.");
+                throw new InvalidArgumentException("All controls must be of type Control.");
             }
         }
         $this->_controls = $controls;

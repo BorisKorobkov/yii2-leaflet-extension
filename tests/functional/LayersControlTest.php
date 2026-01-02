@@ -43,7 +43,7 @@ class LayersControlTest extends TestCase
 
     public function testSetWrongBaseLayers()
     {
-        $this->setExpectedException('yii\base\InvalidParamException');
+        $this->setExpectedException('yii\base\InvalidArgumentException');
         $this->layers->setBaseLayers(['bad']);
 
     }
@@ -63,7 +63,7 @@ class LayersControlTest extends TestCase
     }
 
     public function testSetWrongOverlays() {
-        $this->setExpectedException('yii\base\InvalidParamException');
+        $this->setExpectedException('yii\base\InvalidArgumentException');
         $this->layers->setOverlays(['bad']);
     }
 

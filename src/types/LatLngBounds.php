@@ -7,7 +7,7 @@
 namespace dosamigos\leaflet\types;
 
 use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\web\JsExpression;
 
 /**
@@ -126,7 +126,7 @@ class LatLngBounds extends Type
         $max_lng = -1000;
         foreach ($latLngs as $latLng) {
             if (!($latLng instanceof LatLng)) {
-                throw new InvalidParamException('"$latLngs" should be an array of LatLng instances.');
+                throw new InvalidArgumentException('"$latLngs" should be an array of LatLng instances.');
             }
             /* @var $coord LatLng */
             $min_lat = min($min_lat, $latLng->lat);

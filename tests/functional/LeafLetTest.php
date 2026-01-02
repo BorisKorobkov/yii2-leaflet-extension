@@ -41,7 +41,7 @@ class LeafLetTest extends TestCase
         $leafLet->addControl($layers);
         $this->assertEquals([$zoomControl, $layers], $leafLet->getControls());
 
-        $this->setExpectedException('yii\base\InvalidParamException');
+        $this->setExpectedException('yii\base\InvalidArgumentException');
         $leafLet->setControls(['wrong']);
     }
 

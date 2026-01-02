@@ -8,7 +8,7 @@ namespace dosamigos\leaflet\layers;
 
 
 use yii\base\Component;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\JsExpression;
@@ -43,12 +43,12 @@ class LayerGroup extends Component
      * @param Layer $layer
      *
      * @return $this
-     * @throws \yii\base\InvalidParamException
+     * @throws \yii\base\InvalidArgumentException
      */
     public function addLayer(Layer $layer)
     {
         if (($layer instanceof Popup) || ($layer instanceof TileLayer)) {
-            throw new InvalidParamException("'\$layer' cannot be of type Popup or TileLayer.");
+            throw new InvalidArgumentException("'\$layer' cannot be of type Popup or TileLayer.");
         }
         $layer->map = null;
         $this->_layers[$layer->getName(true)] = $layer;
