@@ -25,16 +25,30 @@
         "issues": "https://github.com/2amigos/yii2-leaflet-extension/issues",
         "source": "https://github.com/2amigos/yii2-leaflet-extension"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "require": {
+        "php": ">=8.0",
         "yiisoft/yii2": "^2.0",
-        "bower-asset/leaflet": "^1.0"
+        "npm-asset/leaflet": "^1.9"
     },
-    "require-dev": {
-        "phpunit/phpunit": "4.*"
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     },
     "autoload": {
         "psr-4": {
             "dosamigos\\leaflet\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "dosamigos\\leaflet\\tests\\": "tests/"
         }
     },
     "extra": {
@@ -42,7 +56,16 @@
             "dev-master": "1.0-dev"
         },
         "asset-installer-paths": {
-            "bower-asset-library": "vendor/bower"
+            "npm-asset-library": "vendor/npm"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.0"
+        },
+        "sort-packages": true,
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
         }
     }
 }

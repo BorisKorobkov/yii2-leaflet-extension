@@ -33,7 +33,7 @@ use yii\web\AssetBundle;
  */
 class LeafLetAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/leaflet/dist';
+    public $sourcePath = '@npm/leaflet/dist';
 
     public $css = [
         'leaflet.css'
