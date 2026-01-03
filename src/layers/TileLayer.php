@@ -62,16 +62,18 @@ class TileLayer extends Layer
     /**
      * @return \yii\web\JsExpression
      */
-    public function encode(): JsExpression
+    public function encode(bool $isAddSemicolon = true): JsExpression
     {
         $options = $this->getOptions();
         $name = $this->getName();
         $map = $this->map;
         $js = "L.tileLayer(" . Json::encode($this->urlTemplate) . ", $options)" . ($map !== null ? ".addTo($map)" : "");
+        $js .= $this->getEvents();
         if (!empty($name)) {
-            $js = "var $name = $js;";
+            $js = "var $name = $js" . ($isAddSemicolon ? ";" : "");
+        } elseif ($isAddSemicolon) {
+            $js .= ";";
         }
-        $js .= $this->getEvents() . ($map !== null && empty($name) ? ";" : "");
 
         return new JsExpression($js);
     }

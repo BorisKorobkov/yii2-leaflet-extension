@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tests;
 
@@ -9,14 +10,14 @@ use Yii;
 /**
  * This is the base class for all yii framework unit tests.
  */
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     public static $params;
 
     /**
      * Mock application prior running tests.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mockWebApplication(
             [
@@ -38,7 +39,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      * Clean up after test.
      * By default the application created with [[mockApplication]] will be destroyed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->destroyApplication();
@@ -64,6 +65,10 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             'id' => 'testapp',
             'basePath' => __DIR__,
             'vendorPath' => $this->getVendorPath(),
+            'aliases' => [
+                '@npm' => is_dir($this->getVendorPath() . '/npm-asset') ? '@vendor/npm-asset' : '@vendor/npm',
+                '@bower' => is_dir($this->getVendorPath() . '/bower-asset') ? '@vendor/bower-asset' : '@vendor/bower',
+            ],
             'components' => [
                 'request' => [
                     'cookieValidationKey' => 'wefJDF8sfdsfSDefwqdxj9oq',
@@ -71,7 +76,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
                     'scriptUrl' => '/index.php',
                 ],
                 'assetManager' => [
-                    'class' => 'tests\AssetManager',
+                    'class' => \tests\AssetManager::class,
                     'basePath' => '@tests/assets',
                     'baseUrl' => '/',
                 ]
@@ -115,8 +120,8 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function assertEqualsWithoutLE($expected, $actual)
     {
-        $expected = str_replace("\r\n", "\n", $expected);
-        $actual = str_replace("\r\n", "\n", $actual);
+        $expected = str_replace("\r\n", "\n", (string)$expected);
+        $actual = str_replace("\r\n", "\n", (string)$actual);
         $this->assertEquals($expected, $actual);
     }
 }

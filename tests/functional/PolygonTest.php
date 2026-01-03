@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tests;
 
@@ -46,7 +47,7 @@ class PolygonTest extends TestCase
         $actual = $polygon->encode();
 
         $this->assertEquals(
-            "L.polygon([[39.61,-105.02],[39.73,-104.88],[39.74,-104.99]], {})",
+            "L.polygon([[39.61,-105.02],[39.73,-104.88],[39.74,-104.99]], {});",
             $actual
         );
     }
@@ -134,7 +135,7 @@ class PolygonTest extends TestCase
     public function testException() {
         $polygon = new Polygon(['map' => 'testMap']);
 
-        $this->setExpectedException('yii\base\InvalidArgumentException');
+        $this->expectException('yii\base\InvalidArgumentException');
         $polygon->setLatLngs(['wrongValue']);
     }
 }

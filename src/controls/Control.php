@@ -30,8 +30,8 @@ abstract class Control extends Component
      * @var string the name of the javascript variable that will hold the reference
      * to the map object.
      */
-
     public ?string $map = null;
+
     /**
      * @var string the initial position of the control (one of the map corners).
      */
@@ -43,7 +43,7 @@ abstract class Control extends Component
      * [options](https://leafletjs.com/reference.html).
      */
     public array $clientOptions = [];
- 
+
     /**
      * @var string the variable name. If not null, then the js creation script
      * will be returned as a variable. If null, then the js creation script will
@@ -69,9 +69,9 @@ abstract class Control extends Component
     /**
      * Sets the name of the layer.
      *
-     * @param string $value name of the layer.
+     * @param string|null $value name of the layer.
      */
-    public function setName(string $value): void
+    public function setName(?string $value): void
     {
         $this->_name = $value;
     }
@@ -89,5 +89,5 @@ abstract class Control extends Component
      * Returns the javascript ready code for the object to render
      * @return \yii\web\JsExpression
      */
-    abstract public function encode(): JsExpression;
+    abstract public function encode(bool $isAddSemicolon = true): JsExpression;
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tests;
 
@@ -18,37 +19,31 @@ class PolylineTest extends TestCase
             new LatLng(['lat' => 39.73, 'lng' => -104.88]),
             new LatLng(['lat' => 39.74, 'lng' => -104.99])
         ];
-
         $polyline = new PolyLine();
-
         $polyline->setLatLngs($latLngs);
 
         $this->assertCount(3, $polyline->getLatLngs());
 
-        $this->assertEquals(
-            [
-                [39.61, -105.02],
-                [39.73, -104.88],
-                [39.74, -104.99]
-            ],
-            $polyline->getLatLngstoArray()
-        );
+        $expected1 = [
+            [39.61, -105.02],
+            [39.73, -104.88],
+            [39.74, -104.99]
+        ];
+        $actual1 = $polyline->getLatLngstoArray();
+        $this->assertEquals($expected1, $actual1);
 
-        $bounds = new LatLngBounds(
+        $expected2 = new LatLngBounds(
             [
                 'southWest' => new LatLng(['lat' => 39.61, 'lng' => -105.02]),
                 'northEast' => new LatLng(['lat' => 39.74, 'lng' => -104.88])
             ]
         );
+        $actual2 = $polyline->getBounds();
+        $this->assertEquals($expected2, $actual2);
 
-        $this->assertEquals($bounds, $polyline->getBounds());
-
-        $actual = $polyline->encode();
-
-        $this->assertEquals(
-            "L.polyline([[39.61,-105.02],[39.73,-104.88],[39.74,-104.99]], {})",
-            $actual
-        );
+        $expected3 = "L.polyline([[39.61,-105.02],[39.73,-104.88],[39.74,-104.99]], {});";
+        $actual3 = $polyline->encode();
+        $this->assertEquals($expected3, $actual3);
     }
 
     public function testEncodeWithName()
@@ -58,37 +53,31 @@ class PolylineTest extends TestCase
             new LatLng(['lat' => 39.73, 'lng' => -104.88]),
             new LatLng(['lat' => 39.74, 'lng' => -104.99])
         ];
-
         $polyline = new PolyLine(['name' => 'testPolyline']);
-
         $polyline->setLatLngs($latLngs);
 
         $this->assertCount(3, $polyline->getLatLngs());
 
-        $this->assertEquals(
-            [
-                [39.61, -105.02],
-                [39.73, -104.88],
-                [39.74, -104.99]
-            ],
-            $polyline->getLatLngstoArray()
-        );
+        $expected1 = [
+            [39.61, -105.02],
+            [39.73, -104.88],
+            [39.74, -104.99]
+        ];
+        $actual1 = $polyline->getLatLngstoArray();
+        $this->assertEquals($expected1, $actual1);
 
-        $bounds = new LatLngBounds(
+        $expected2 = new LatLngBounds(
             [
                 'southWest' => new LatLng(['lat' => 39.61, 'lng' => -105.02]),
                 'northEast' => new LatLng(['lat' => 39.74, 'lng' => -104.88])
             ]
         );
+        $actual2 = $polyline->getBounds();
+        $this->assertEquals($expected2, $actual2);
 
-        $this->assertEquals($bounds, $polyline->getBounds());
-
-        $actual = $polyline->encode();
-
-        $this->assertEquals(
-            "var testPolyline = L.polyline([[39.61,-105.02],[39.73,-104.88],[39.74,-104.99]], {});",
-            $actual
-        );
+        $expected3 = "var testPolyline = L.polyline([[39.61,-105.02],[39.73,-104.88],[39.74,-104.99]], {});";
+        $actual3 = $polyline->encode();
+        $this->assertEquals($expected3, $actual3);
     }
 
     public function testEncodeWithMapName()
@@ -98,43 +87,37 @@ class PolylineTest extends TestCase
             new LatLng(['lat' => 39.73, 'lng' => -104.88]),
             new LatLng(['lat' => 39.74, 'lng' => -104.99])
         ];
-
         $polyline = new PolyLine(['map' => 'testMap']);
-
         $polyline->setLatLngs($latLngs);
 
         $this->assertCount(3, $polyline->getLatLngs());
 
-        $this->assertEquals(
-            [
-                [39.61, -105.02],
-                [39.73, -104.88],
-                [39.74, -104.99]
-            ],
-            $polyline->getLatLngstoArray()
-        );
+        $expected1 = [
+            [39.61, -105.02],
+            [39.73, -104.88],
+            [39.74, -104.99]
+        ];
+        $actual1 = $polyline->getLatLngstoArray();
+        $this->assertEquals($expected1, $actual1);
 
-        $bounds = new LatLngBounds(
+        $expected2 = new LatLngBounds(
             [
                 'southWest' => new LatLng(['lat' => 39.61, 'lng' => -105.02]),
                 'northEast' => new LatLng(['lat' => 39.74, 'lng' => -104.88])
             ]
         );
+        $actual2 = $polyline->getBounds();
+        $this->assertEquals($expected2, $actual2);
 
-        $this->assertEquals($bounds, $polyline->getBounds());
-
-        $actual = $polyline->encode();
-
-        $this->assertEquals(
-            "L.polyline([[39.61,-105.02],[39.73,-104.88],[39.74,-104.99]], {}).addTo(testMap);",
-            $actual
-        );
+        $expected3 = "L.polyline([[39.61,-105.02],[39.73,-104.88],[39.74,-104.99]], {}).addTo(testMap);";
+        $actual3 = $polyline->encode();
+        $this->assertEquals($expected3, $actual3);
     }
 
     public function testException() {
         $polyline = new PolyLine(['map' => 'testMap']);
 
-        $this->setExpectedException('yii\base\InvalidArgumentException');
+        $this->expectException('yii\base\InvalidArgumentException');
         $polyline->setLatLngs(['wrongValue']);
     }
 }

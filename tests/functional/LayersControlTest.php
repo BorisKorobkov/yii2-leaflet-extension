@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tests;
 
@@ -19,7 +20,7 @@ class LayersControlTest extends TestCase
      */
     public $layers;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->layers = new Layers();
@@ -43,7 +44,7 @@ class LayersControlTest extends TestCase
 
     public function testSetWrongBaseLayers()
     {
-        $this->setExpectedException('yii\base\InvalidArgumentException');
+        $this->expectException('yii\base\InvalidArgumentException');
         $this->layers->setBaseLayers(['bad']);
 
     }
@@ -57,13 +58,13 @@ class LayersControlTest extends TestCase
 
         $layers->setBaseLayers(['mqcdn'=> $tileLayer]);
 
-        $expected = Json::encode($layers->getEncodedBaseLayers());
-
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/layers-control-baselayers.bin'), $expected);
+        $actual = Json::encode($layers->getEncodedBaseLayers());
+        $expected = file_get_contents(__DIR__ . '/data/layers-control-baselayers.js');
+        $this->assertEquals($expected, $actual);
     }
 
     public function testSetWrongOverlays() {
-        $this->setExpectedException('yii\base\InvalidArgumentException');
+        $this->expectException('yii\base\InvalidArgumentException');
         $this->layers->setOverlays(['bad']);
     }
 
@@ -77,9 +78,10 @@ class LayersControlTest extends TestCase
         $group->addLayer($littleton);
         $group->addLayer($denver);
         $layers->setOverlays(['cities'  => $group]);
-        $expected = Json::encode($layers->getEncodedOverlays());
 
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/layers-control-overlays.bin'), $expected);
+        $actual = Json::encode($layers->getEncodedOverlays());
+        $expected = file_get_contents(__DIR__ . '/data/layers-control-overlays.js');
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeNoName() {
@@ -98,9 +100,9 @@ class LayersControlTest extends TestCase
 
         $layers->setBaseLayers(['mqcdn'=> $tileLayer]);
 
-        $expected = Json::encode($layers->encode());
-
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/layers-control-no-map.bin'), $expected);
+        $actual = Json::encode($layers->encode());
+        $expected = file_get_contents(__DIR__ . '/data/layers-control-no-map.js');
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithName() {
@@ -119,9 +121,9 @@ class LayersControlTest extends TestCase
 
         $layers->setBaseLayers(['mqcdn'=> $tileLayer]);
 
-        $expected = Json::encode($layers->encode());
-
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/layers-control-with-name.bin'), $expected);
+        $actual = Json::encode($layers->encode());
+        $expected = file_get_contents(__DIR__ . '/data/layers-control-with-name.js');
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithMap() {
@@ -140,8 +142,8 @@ class LayersControlTest extends TestCase
 
         $layers->setBaseLayers(['mqcdn'=> $tileLayer]);
 
-        $expected = Json::encode($layers->encode());
-
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/layers-control-with-map.bin'), $expected);
+        $actual = Json::encode($layers->encode());
+        $expected = file_get_contents(__DIR__ . '/data/layers-control-with-map.js');
+        $this->assertEquals($expected, $actual);
     }
 }

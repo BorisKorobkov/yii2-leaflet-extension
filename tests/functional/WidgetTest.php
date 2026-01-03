@@ -25,13 +25,12 @@ class WidgetTest extends TestCase
         $view = \Yii::$app->getView();
         $content = $view->render('//map-widget');
         $actual = $view->render('//layouts/main', ['content' => $content]);
-
-        $expected = file_get_contents(__DIR__ . '/data/test-map-widget.bin');
+        $expected = file_get_contents(__DIR__ . '/data/test-map-widget.html');
         $this->assertEquals($expected, $actual);
     }
 
     public function testException() {
-        $this->setExpectedException('yii\base\InvalidConfigException');
+        $this->expectException('yii\base\InvalidConfigException');
         $widget = Map::begin();
     }
 }

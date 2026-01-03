@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace dosamigos\leaflet\layers;
 
 use dosamigos\leaflet\LeafLet;
-use yii\base\Component;
 use dosamigos\leaflet\types\Type;
+use yii\base\Component;
 use yii\helpers\Json;
 use yii\web\JsExpression;
 
@@ -67,22 +67,17 @@ abstract class Layer extends Component
     {
         $js = [];
         if (!empty($this->clientEvents)) {
-            $name = $this->getName();
-            if (!empty($name)) {
-                $js[] = $name;
-            }
             foreach ($this->clientEvents as $event => $handler) {
                 $js[] = ".on(" . Json::encode($event) . ", $handler)";
             }
         }
 
-        $code = implode("", $js);
-        return (!empty($code) && !empty($this->getName())) ? $code . ";" : $code;
+        return implode("", $js);
     }
 
     /**
      * Returns the javascript ready code for the object to render
      * @return \yii\web\JsExpression
      */
-    abstract public function encode(): JsExpression;
+    abstract public function encode(bool $isAddSemicolon = true): JsExpression;
 }

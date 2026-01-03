@@ -37,7 +37,7 @@ class Marker extends Layer
      *
      * @param Icon $icon
      */
-    public function setIcon($icon): void //Icon - if you force the icon as type, the makimarker won't work...:(
+    public function setIcon($icon): void // Icon - if you force the icon as type, the makimarker won't work...:(
     {
         $this->clientOptions['icon'] = $icon;
     }
@@ -65,17 +65,19 @@ class Marker extends Layer
     /**
      * @return \yii\web\JsExpression the marker constructor string
      */
-    public function encode(): JsExpression
+    public function encode(bool $isAddSemicolon = true): JsExpression
     {
         $latLon = $this->getLatLng()->toArray(true);
         $options = $this->getOptions();
         $name = $this->name;
         $map = $this->map;
         $js = $this->bindPopupContent("L.marker($latLon, $options)") . ($map !== null ? ".addTo($map)" : "");
+        $js .= $this->getEvents();
         if (!empty($name)) {
-            $js = "var $name = $js;";
+            $js = "var $name = $js" . ($isAddSemicolon ? ";" : "");
+        } elseif ($isAddSemicolon) {
+            $js .= ";";
         }
-        $js .= $this->getEvents() . ($map !== null && empty($name)? ";" : "");
 
         return new JsExpression($js);
     }

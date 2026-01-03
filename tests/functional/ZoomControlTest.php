@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tests;
 
@@ -12,21 +13,22 @@ class ZoomControlTest extends TestCase
     public function testEncode()
     {
         $zoom = new Zoom();
-        $expected = $zoom->encode();
-        $this->assertEquals('L.control.zoom({"position":"topright"})', $expected);
+        $actual = $zoom->encode();
+        $expected = 'L.control.zoom({"position":"topright"});';
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithName() {
         $zoom = new Zoom(['name' => 'zoomName']);
-        $expected = $zoom->encode();
-
-        $this->assertEquals('var zoomName = L.control.zoom({"position":"topright"});', $expected);
+        $actual = $zoom->encode();
+        $expected = 'var zoomName = L.control.zoom({"position":"topright"});';
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithMap() {
         $zoom = new Zoom(['map' => 'mapName']);
-        $expected = $zoom->encode();
-
-        $this->assertEquals('L.control.zoom({"position":"topright"}).addTo(mapName);', $expected);
+        $actual = $zoom->encode();
+        $expected = 'L.control.zoom({"position":"topright"}).addTo(mapName);';
+        $this->assertEquals($expected, $actual);
     }
 }

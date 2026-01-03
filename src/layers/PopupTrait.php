@@ -19,7 +19,7 @@ trait PopupTrait
      * @var string the HTML content of the popup to display when clicking on the marker.
      */
     public ?string $popupContent = null;
- 
+
     /**
      * @var bool whether to open the popup dialog on display.
      */

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace tests;
 
 
@@ -15,7 +17,7 @@ class LayerGroupLayerTest extends TestCase
 {
     public function testException()
     {
-        $this->setExpectedException('yii\base\InvalidArgumentException');
+        $this->expectException('yii\base\InvalidArgumentException');
         $layerGroup = new LayerGroup();
         $popup = new Popup(['latLng' => new LatLng(['lat' => 51.508, 'lng' => -0.11])]);
         $layerGroup->addLayer($popup);
@@ -39,7 +41,6 @@ class LayerGroupLayerTest extends TestCase
         $layerGroup->addLayer($marker);
 
         $this->assertNotNull($layerGroup->getLayer('marker'));
-
         $this->assertNotNull($layerGroup->removeLayer('marker'));
         $this->assertCount(0, $layerGroup->getLayers());
     }
@@ -54,8 +55,8 @@ class LayerGroupLayerTest extends TestCase
         $group->addLayer($denver);
 
         $actual = $group->encode();
-
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/layerGroup-layer.bin'), $actual);
+        $expected = file_get_contents(__DIR__ . '/data/layerGroup-layer.js');
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithName()
@@ -68,8 +69,8 @@ class LayerGroupLayerTest extends TestCase
         $group->addLayer($denver);
 
         $actual = $group->encode();
-
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/layerGroup-layer-with-name.bin'), $actual);
+        $expected = file_get_contents(__DIR__ . '/data/layerGroup-layer-with-name.js');
+        $this->assertEquals($expected, $actual);
     }
 
     public function testOneLineEncode()
@@ -82,10 +83,7 @@ class LayerGroupLayerTest extends TestCase
         $group->addLayer($denver);
 
         $actual = $group->oneLineEncode();
-
-        $this->assertEquals(
-            'L.layerGroup([L.marker([39.61,-105.02], {}),L.marker([39.74,-104.99], {})]).addTo(testMap);',
-            $actual
-        );
+        $expected = 'L.layerGroup([L.marker([39.61,-105.02], {}),L.marker([39.74,-104.99], {})]).addTo(testMap);';
+        $this->assertEquals($expected, $actual);
     }
 }

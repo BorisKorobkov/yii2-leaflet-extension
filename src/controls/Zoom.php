@@ -27,15 +27,17 @@ class Zoom extends Control
      * Returns the javascript ready code for the object to render
      * @return \yii\web\JsExpression
      */
-    public function encode(): JsExpression
+    public function encode(bool $isAddSemicolon = true): JsExpression
     {
         $this->clientOptions['position'] = $this->position;
         $options = $this->getOptions();
         $name = $this->getName();
         $map = $this->map;
-        $js = "L.control.zoom($options)" . ($map !== null ? ".addTo($map);" : "");
+        $js = "L.control.zoom($options)" . ($map !== null ? ".addTo($map)" : "");
         if (!empty($name)) {
-            $js = "var $name = $js" . ($map !== null ? "" : ";");
+            $js = "var $name = $js" . ($isAddSemicolon ? ";" : "");
+        } elseif ($isAddSemicolon) {
+            $js .= ";";
         }
         return new JsExpression($js);
     }

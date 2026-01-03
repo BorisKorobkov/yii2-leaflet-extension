@@ -209,7 +209,7 @@ class LeafLet extends Component
         foreach ($this->getLayers() as $layer) {
 
             if ($layer instanceof Polygon) {
-                $layerJs = $layer->encode();
+                $layerJs = $layer->encode(false);
                 $insertAtTheBottom = $layer->insertAtTheBottom ? 'true' : 'false';
                 $js[] = "$this->name.addLayer($layerJs, $insertAtTheBottom);";
                 continue;

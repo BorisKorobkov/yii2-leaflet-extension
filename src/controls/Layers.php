@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 namespace dosamigos\leaflet\controls;
 
-
 use dosamigos\leaflet\layers\LayerGroup;
 use dosamigos\leaflet\layers\TileLayer;
 use dosamigos\leaflet\LeafLet;
@@ -63,7 +62,7 @@ class Layers extends Control
         $layers = [];
         foreach ($this->getBaseLayers() as $key => $layer) {
             $layer->setName(null);
-            $layers[$key] = new JsExpression(str_replace(";", "", (string)$layer->encode()));
+            $layers[$key] = $layer->encode(false);
         }
         return $layers;
     }
@@ -115,7 +114,7 @@ class Layers extends Control
      * Returns the javascript ready code for the object to render
      * @return \yii\web\JsExpression
      */
-    public function encode(): JsExpression
+    public function encode(bool $isAddSemicolon = true): JsExpression
     {
         $this->clientOptions['position'] = $this->position;
         $layers = $this->getEncodedBaseLayers();
@@ -127,9 +126,11 @@ class Layers extends Control
         $layers = empty($layers) ? '{}' : Json::encode($layers, LeafLet::JSON_OPTIONS);
         $overlays = empty($overlays) ? '{}' : Json::encode($overlays, LeafLet::JSON_OPTIONS);
 
-        $js = "L.control.layers($layers, $overlays, $options)" . ($map !== null ? ".addTo($map);" : "");
+        $js = "L.control.layers($layers, $overlays, $options)" . ($map !== null ? ".addTo($map)" : "");
         if (!empty($name)) {
-            $js = "var $name = $js" . ($map !== null ? "" : ";");
+            $js = "var $name = $js" . ($isAddSemicolon ? ";" : "");
+        } elseif ($isAddSemicolon) {
+            $js .= ";";
         }
         return new JsExpression($js);
     }

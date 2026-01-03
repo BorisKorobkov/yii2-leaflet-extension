@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tests;
 
@@ -11,7 +12,7 @@ class TileLayerTest extends TestCase
 {
     public function testException()
     {
-        $this->setExpectedException('yii\base\InvalidConfigException');
+        $this->expectException('yii\base\InvalidConfigException');
         $tileLayer = new TileLayer();
     }
 
@@ -22,11 +23,9 @@ class TileLayerTest extends TestCase
                 'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
             ]
         );
-
-        $this->assertEquals(
-            "L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {})",
-            $tileLayer->encode()
-        );
+        $expected = 'L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {});';
+        $actual = $tileLayer->encode();
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithName() {
@@ -36,11 +35,9 @@ class TileLayerTest extends TestCase
                 'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
             ]
         );
-
-        $this->assertEquals(
-            "var testTileLayer = L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {});",
-            $tileLayer->encode()
-        );
+        $expected = 'var testTileLayer = L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {});';
+        $actual = $tileLayer->encode();
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithMap() {
@@ -50,10 +47,8 @@ class TileLayerTest extends TestCase
                 'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
             ]
         );
-
-        $this->assertEquals(
-            "L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {}).addTo(map);",
-            $tileLayer->encode()
-        );
+        $expected = 'L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {}).addTo(map);';
+        $actual = $tileLayer->encode();
+        $this->assertEquals($expected, $actual);
     }
 }

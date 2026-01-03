@@ -38,17 +38,19 @@ class GeoJson extends Layer
      * Returns the javascript ready code for the object to render
      * @return JsExpression
      */
-    public function encode(): JsExpression
+    public function encode(bool $isAddSemicolon = true): JsExpression
     {
         $data = Json::encode($this->data, LeafLet::JSON_OPTIONS);
         $options = $this->getOptions();
         $name = $this->getName();
         $map = $this->map;
         $js = "L.geoJson($data, $options)" . ($map !== null ? ".addTo($map)" : "");
+        $js .= $this->getEvents();
         if (!empty($name)) {
-            $js = "var $name = $js;";
+            $js = "var $name = $js" . ($isAddSemicolon ? ";" : "");
+        } elseif ($isAddSemicolon) {
+            $js .= ";";
         }
-        $js .= $this->getEvents() . ($map !== null && empty($name) ? ";" : "");
 
         return new JsExpression($js);
     }

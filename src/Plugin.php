@@ -12,6 +12,7 @@ namespace dosamigos\leaflet;
 use yii\base\Component;
 use yii\helpers\Json;
 use yii\web\View;
+use yii\web\JsExpression;
 
 /**
  * @property string $name
@@ -70,9 +71,9 @@ abstract class Plugin extends Component
     /**
      * Sets the name of the layer.
      *
-     * @param string $value name of the layer.
+     * @param string|null $value name of the layer.
      */
-    public function setName(string $value): void
+    public function setName(?string $value): void
     {
         $this->_name = $value;
     }
@@ -92,13 +93,12 @@ abstract class Plugin extends Component
     public function getEvents(): string
     {
         $js = [];
-        $name = $this->getName();
-        if (!empty($name) && !empty($this->clientEvents)) {
+        if (!empty($this->clientEvents)) {
             foreach ($this->clientEvents as $event => $handler) {
-                $js[] = "$name.on('$event', $handler);";
+                $js[] = ".on(" . Json::encode($event) . ", $handler)";
             }
         }
-        return !empty($js) ? implode("\n", $js) : "";
+        return implode("", $js);
     }
 
     /**
@@ -118,7 +118,7 @@ abstract class Plugin extends Component
 
     /**
      * Returns the javascript ready code for the object to render
-     * @return string
+     * @return JsExpression
      */
-    abstract public function encode(): string;
+    abstract public function encode(bool $isAddSemicolon = true): JsExpression;
 }

@@ -92,22 +92,22 @@ class LayerGroup extends Component
     /**
      * @return JsExpression
      */
-    public function encode(): JsExpression
+    public function encode(bool $isAddSemicolon = true): JsExpression
     {
         $js = [];
         $layers = $this->getLayers();
         $name = $this->getName();
-        $names = str_replace(array('"', "'"), "", Json::encode(array_keys($layers)));
+        $names = str_replace(['"', "'"], "", Json::encode(array_keys($layers)));
         $map = $this->map;
         foreach ($layers as $layer) {
             $js[] = $layer->encode();
         }
-        $initJs = "L.layerGroup($names)" . ($map !== null ? ".addTo($map);\n" : "");
+        $initJs = "L.layerGroup($names)" . ($map !== null ? ".addTo($map)" : "");
 
-        if (empty($name)) {
-            $js[] = $initJs . ($map !== null ? "" : ";");
+        if (!empty($name)) {
+            $js[] = "var $name = $initJs" . ($isAddSemicolon ? ";" : "");
         } else {
-            $js[] = "var $name = $initJs" . ($map !== null ? "" : ";");
+            $js[] = $initJs . ($isAddSemicolon ? ";" : "");
         }
         return new JsExpression(implode("\n", $js));
     }
@@ -124,7 +124,7 @@ class LayerGroup extends Component
         /** @var \dosamigos\leaflet\layers\Layer $layer */
         foreach ($layers as $layer) {
             $layer->setName(null);
-            $layersJs[] = $layer->encode();
+            $layersJs[] = $layer->encode(false);
         }
         $js = "L.layerGroup([" . implode(",", $layersJs) . "])" . ($map !== null ? ".addTo($map);" : "");
         return new JsExpression($js);

@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 namespace dosamigos\leaflet\layers;
 
-
 use dosamigos\leaflet\LeafLet;
 
 trait NameTrait

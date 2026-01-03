@@ -49,7 +49,7 @@ class Circle extends Layer
      * Returns the javascript ready code for the object to render
      * @return JsExpression
      */
-    public function encode(): JsExpression
+    public function encode(bool $isAddSemicolon = true): JsExpression
     {
         $bounds = $this->getLatLng()->toArray(true);
         $radius = $this->radius;
@@ -57,10 +57,13 @@ class Circle extends Layer
         $name = $this->name;
         $map = $this->map;
         $js = $this->bindPopupContent("L.circle($bounds, $radius, $options)") . ($map !== null ? ".addTo($map)" : "");
+        $js .= $this->getEvents();
         if (!empty($name)) {
-            $js = "var $name = $js;";
+            $js = "var $name = $js" . ($isAddSemicolon ? ";" : "");
+        } elseif ($isAddSemicolon) {
+            $js .= ";";
         }
-        $js .= $this->getEvents() . ($map !== null && empty($name) ? ";" : "");
+
         return new JsExpression($js);
     }
 }

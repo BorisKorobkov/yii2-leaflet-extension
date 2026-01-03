@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 use dosamigos\leaflet\layers\Marker;
 use dosamigos\leaflet\layers\TileLayer;
 use dosamigos\leaflet\LeafLet;

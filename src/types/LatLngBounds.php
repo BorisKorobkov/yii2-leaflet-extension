@@ -139,15 +139,18 @@ class LatLngBounds extends Type
             $max_lng = max($max_lng, $latLng->lng);
         }
         if ($margin > 0) {
-            $min_lat = $min_lat - $margin * ($max_lat - $min_lat);
-            $min_lng = $min_lng - $margin * ($max_lng - $min_lng);
-            $max_lat = $max_lat + $margin * ($max_lat - $min_lat);
-            $max_lng = $max_lng + $margin * ($max_lng - $min_lng);
+            $latDiff = $max_lat - $min_lat;
+            $lngDiff = $max_lng - $min_lng;
+
+            $min_lat -= $margin * $latDiff;
+            $min_lng -= $margin * $lngDiff;
+            $max_lat += $margin * $latDiff;
+            $max_lng += $margin * $lngDiff;
         }
         $bounds = new LatLngBounds(
             [
-                'southWest' => new LatLng(['lat' => $min_lat, 'lng' => $min_lng]),
-                'northEast' => new LatLng(['lat' => $max_lat, 'lng' => $max_lng])
+                'southWest' => new LatLng(['lat' => round($min_lat, 2), 'lng' => round($min_lng, 2)]),
+                'northEast' => new LatLng(['lat' => round($max_lat, 2), 'lng' => round($max_lng, 2)])
             ]
         );
         return $bounds;

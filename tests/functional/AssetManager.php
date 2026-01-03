@@ -20,11 +20,12 @@ class AssetManager extends \yii\web\AssetManager
     /**
      * @inheritdoc
      */
-    public function hash($path) {
+    public function hash($path): string
+    {
         if (!isset($this->_hashes[$path])) {
             $this->_hashes[$path] = $this->_counter++;
         }
 
-        return $this->_hashes[$path];
+        return (string)$this->_hashes[$path];
     }
 }

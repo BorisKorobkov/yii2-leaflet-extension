@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace tests;
 
 
@@ -11,7 +13,7 @@ class MarkerLayerTest extends TestCase
 {
     public function testInvalidConfiguration()
     {
-        $this->setExpectedException('yii\base\InvalidConfigException');
+        $this->expectException('yii\base\InvalidConfigException');
         $marker = new Marker();
     }
 
@@ -28,9 +30,10 @@ class MarkerLayerTest extends TestCase
         );
 
         $this->assertNotNull($marker->icon);
-        $expected = 'L.marker([51.508,-0.11], {"icon":L.icon({"iconUrl":"http://example.com/icon.png"})}).bindPopup("test!")';
+        $expected = 'L.marker([51.508,-0.11], {"icon":L.icon({"iconUrl":"http://example.com/icon.png"})}).bindPopup("test!");';
+        $actual = $marker->encode();
 
-        $this->assertEquals($expected, $marker->encode());
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithName()
@@ -47,8 +50,9 @@ class MarkerLayerTest extends TestCase
         );
 
         $expected = 'var test = L.marker([51.508,-0.11], {}).bindPopup("test!").openPopup();';
+        $actual = $marker->encode();
 
-        $this->assertEquals($expected, $marker->encode());
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithNameAndEvents() {
@@ -65,10 +69,12 @@ class MarkerLayerTest extends TestCase
             ]
         );
 
-        $expected = 'var test = L.marker([51.508,-0.11], {}).addTo(testMap);test.on(\'click\', function(e){ console.log(e); });';
+        $expected = 'var test = L.marker([51.508,-0.11], {}).addTo(testMap).on("click", function(e){ console.log(e); });';
+        $actual = $marker->encode();
 
-        $this->assertEquals($expected, $marker->encode());
+        $this->assertEquals($expected, $actual);
     }
+    
     public function testEncodeWithoutNameAndEvents() {
         $latLng = new LatLng(['lat' => 51.508, 'lng' => -0.11]);
 
@@ -82,8 +88,9 @@ class MarkerLayerTest extends TestCase
             ]
         );
 
-        $expected = 'L.marker([51.508,-0.11], {}).addTo(testMap).on(\'click\', function(e){ console.log(e); });';
+        $expected = 'L.marker([51.508,-0.11], {}).addTo(testMap).on("click", function(e){ console.log(e); });';
+        $actual = $marker->encode();
 
-        $this->assertEquals($expected, $marker->encode());
+        $this->assertEquals($expected, $actual);
     }
 }

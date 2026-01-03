@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tests;
 
@@ -18,33 +19,24 @@ class PopupTest extends TestCase
                 'content' => 'Hey!'
             ]
         );
-
-        $actual = $popup->encode();
-
-        $this->assertEquals("L.popup({}).setLatLng(L.latLng(39.61, -105.02)).setContent('Hey!')", $actual);
+        $expected1 = 'L.popup({}).setLatLng(L.latLng(39.61, -105.02)).setContent("Hey!");';
+        $actual1 = $popup->encode();
+        $this->assertEquals($expected1, $actual1);
 
         $popup->name = 'testName';
-
-        $actual = $popup->encode();
-
-        $this->assertEquals(
-            "var testName = L.popup({}).setLatLng(L.latLng(39.61, -105.02)).setContent('Hey!');",
-            $actual
-        );
+        $expected2 = 'var testName = L.popup({}).setLatLng(L.latLng(39.61, -105.02)).setContent("Hey!");';
+        $actual2 = $popup->encode();
+        $this->assertEquals($expected2, $actual2);
 
         $popup->map = 'testMap';
-
-        $actual = $popup->encode();
-
-        $this->assertEquals(
-            "var testName = L.popup({}).setLatLng(L.latLng(39.61, -105.02)).setContent('Hey!').addTo(testMap);",
-            $actual
-        );
+        $expected3 = 'var testName = L.popup({}).setLatLng(L.latLng(39.61, -105.02)).setContent("Hey!").addTo(testMap);';
+        $actual3 = $popup->encode();
+        $this->assertEquals($expected3, $actual3);
     }
 
     public function testException()
     {
-        $this->setExpectedException('yii\base\InvalidConfigException');
-        $popup = new Popup();
+        $this->expectException('yii\base\InvalidConfigException');
+        new Popup();
     }
 }

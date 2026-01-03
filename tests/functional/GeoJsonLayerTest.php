@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace tests;
 
 
@@ -21,8 +23,9 @@ class GeoJsonLayerTest extends TestCase
         );
 
         $expected = 'L.geoJson({"type":"MultiPoint","coordinates":[[100,0],[101,1]]}, {});';
+        $actual = $json->encode();
 
-        $this->assertEquals($expected, $json->encode());
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithName() {
@@ -37,7 +40,8 @@ class GeoJsonLayerTest extends TestCase
         );
 
         $expected = 'var testJson = L.geoJson({"type":"MultiPoint","coordinates":[[100,0],[101,1]]}, {});';
+        $actual = $json->encode();
 
-        $this->assertEquals($expected, $json->encode());
+        $this->assertEquals($expected, $actual);
     }
 }

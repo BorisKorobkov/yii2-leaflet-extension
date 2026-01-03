@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tests;
 
@@ -20,17 +21,12 @@ class ImageOverlayTest extends TestCase
                 'northEast' => new LatLng(['lat' => 39.74, 'lng' => -104.99])
             ]
         );
-
         $overlay = new ImageOverlay(['imageBounds' => $bounds, 'imageUrl' => 'http://www.example.com/img.png']);
-
         $this->assertEquals($bounds, $overlay->getImageBounds());
 
         $actual = $overlay->encode();
-
-        $this->assertEquals(
-            "L.imageOverlay('http://www.example.com/img.png', L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {})",
-            $actual
-        );
+        $expected = 'L.imageOverlay("http://www.example.com/img.png", L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {});';
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithName()
@@ -41,19 +37,14 @@ class ImageOverlayTest extends TestCase
                 'northEast' => new LatLng(['lat' => 39.74, 'lng' => -104.99])
             ]
         );
-
         $overlay = new ImageOverlay(
             ['name' => 'test', 'imageBounds' => $bounds, 'imageUrl' => 'http://www.example.com/img.png']
         );
-
         $this->assertEquals($bounds, $overlay->getImageBounds());
 
         $actual = $overlay->encode();
-
-        $this->assertEquals(
-            "var test = L.imageOverlay('http://www.example.com/img.png', L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {});",
-            $actual
-        );
+        $expected = 'var test = L.imageOverlay("http://www.example.com/img.png", L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {});';
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithMapName()
@@ -64,18 +55,13 @@ class ImageOverlayTest extends TestCase
                 'northEast' => new LatLng(['lat' => 39.74, 'lng' => -104.99])
             ]
         );
-
         $overlay = new ImageOverlay(
             ['map' => 'test', 'imageBounds' => $bounds, 'imageUrl' => 'http://www.example.com/img.png']
         );
-
         $this->assertEquals($bounds, $overlay->getImageBounds());
 
         $actual = $overlay->encode();
-
-        $this->assertEquals(
-            "L.imageOverlay('http://www.example.com/img.png', L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {}).addTo(test);",
-            $actual
-        );
+        $expected = 'L.imageOverlay("http://www.example.com/img.png", L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {}).addTo(test);';
+        $this->assertEquals($expected, $actual);
     }
 }

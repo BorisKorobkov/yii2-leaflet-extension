@@ -2,8 +2,6 @@ map.addLayer(L.polygon([[39.61,-105.02],[39.73,-104.88],[39.74,-104.99]], {}), t
 var littleton = L.marker([39.61,-105.02], {});
 var denver = L.marker([39.74,-104.99], {});
 L.layerGroup([littleton,denver]).addTo(map);
-
-var testPlugin = L.TestPlugin();
-testPlugin.on('click', function(e){ console.log(e); });
+var testPlugin = L.TestPlugin({}).on("click", function(e){ console.log(e); });
 var test = null;
 var appendedJs = null;

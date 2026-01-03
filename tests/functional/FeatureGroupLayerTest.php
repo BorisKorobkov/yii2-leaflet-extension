@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace tests;
 
@@ -21,9 +22,9 @@ class FeatureGroupLayerTest extends TestCase
         $group->addLayer($denver);
 
         $actual = $group->encode();
+        $expected = file_get_contents(__DIR__ . '/data/featureGroup-layer.js');
 
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/featureGroup-layer.bin'), $actual);
-
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithName() {
@@ -35,8 +36,9 @@ class FeatureGroupLayerTest extends TestCase
         $group->addLayer($denver);
 
         $actual = $group->encode();
+        $expected = file_get_contents(__DIR__ . '/data/featureGroup-layer-with-name.js');
 
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/featureGroup-layer-with-name.bin'), $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testEncodeWithMapAndEvents() {
@@ -50,8 +52,9 @@ class FeatureGroupLayerTest extends TestCase
         $group->addLayer($denver);
 
         $actual = $group->encode();
+        $expected = file_get_contents(__DIR__ . '/data/featureGroup-layer-with-map-and-events.js');
 
-        $this->assertEquals(file_get_contents(__DIR__ . '/data/featureGroup-layer-with-map-and-events.bin'), $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testOneLineEncode() {
@@ -63,7 +66,8 @@ class FeatureGroupLayerTest extends TestCase
         $group->addLayer($denver);
 
         $actual = $group->oneLineEncode();
+        $expected = 'L.featureGroup([L.marker([39.61,-105.02], {}),L.marker([39.74,-104.99], {})]).addTo(testMap);';
 
-        $this->assertEquals('L.featureGroup([L.marker([39.61,-105.02], {}),L.marker([39.74,-104.99], {})]).addTo(testMap);', $actual);
+        $this->assertEquals($expected, $actual);
     }
 }

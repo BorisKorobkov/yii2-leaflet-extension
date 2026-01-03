@@ -38,23 +38,24 @@ class FeatureGroup extends LayerGroup
     /**
      * @return JsExpression
      */
-    public function encode(): JsExpression
+    public function encode(bool $isAddSemicolon = true): JsExpression
     {
         $js = [];
         $layers = $this->getLayers();
         $name = $this->getName();
-        $names = str_replace(array('"', "'"), "", Json::encode(array_keys($layers)));
+        $names = str_replace(['"', "'"], "", Json::encode(array_keys($layers)));
         $map = $this->map;
         foreach ($layers as $layer) {
             $js[] = $layer->encode();
         }
-        $initJs = "L.featureGroup($names)" . $this->getEvents() . ($map !== null ? ".addTo($map);" : "");
+        $initJs = "L.featureGroup($names)" . $this->getEvents() . ($map !== null ? ".addTo($map)" : "");
 
-        if (empty($name)) {
-            $js[] = $initJs . ($map !== null ? "" : ";");
+        if (!empty($name)) {
+            $js[] = "var $name = $initJs" . ($isAddSemicolon ? ";" : "");
         } else {
-            $js[] = "var $name = $initJs" . ($map !== null ? "" : ";");
+            $js[] = $initJs . ($isAddSemicolon ? ";" : "");
         }
+
         return new JsExpression(implode("\n", $js));
     }
 
@@ -69,11 +70,11 @@ class FeatureGroup extends LayerGroup
         /** @var \dosamigos\leaflet\layers\Layer $layer */
         foreach ($layers as $layer) {
             $layer->setName(null);
-            $layersJs[] = $layer->encode();
+            $layersJs[] = $layer->encode(false);
         }
         $js = "L.featureGroup([" . implode(",", $layersJs) . "])" .
             $this->getEvents() .
-            ($map !== null ? ".addTo($map);" : "");
+            ($map !== null ? ".addTo($map);" : ";");
         return new JsExpression($js);
     }
 
@@ -85,9 +86,9 @@ class FeatureGroup extends LayerGroup
         $js = [];
         if (!empty($this->clientEvents)) {
             foreach ($this->clientEvents as $event => $handler) {
-                $js[] = ".on('$event', $handler)";
+                $js[] = ".on(" . Json::encode($event) . ", $handler)";
             }
         }
-        return !empty($js) ? implode("\n", $js) : "";
+        return implode("", $js);
     }
 }

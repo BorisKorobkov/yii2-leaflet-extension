@@ -27,7 +27,6 @@ use yii\web\JsExpression;
  */
 class Polygon extends PolyLine
 {
-
     /**
      * @var bool whether to insert the layer at the bottom most position (z-index) on the map in reference to other
      * ui layers.
@@ -39,17 +38,20 @@ class Polygon extends PolyLine
      * To add a Polygon to the map, you need to use the special method [[LetLeaf::addPolygon]].
      * @return JsExpression
      */
-    public function encode(): JsExpression
+    public function encode(bool $isAddSemicolon = true): JsExpression
     {
         $latLngs = Json::encode($this->getLatLngstoArray(), LeafLet::JSON_OPTIONS);
         $options = $this->getOptions();
         $name = $this->getName();
         $map = $this->map;
         $js = $this->bindPopupContent("L.polygon($latLngs, $options)") . ($map !== null ? ".addTo($map)" : "");
+        $js .= $this->getEvents();
         if (!empty($name)) {
-            $js = "var $name = $js;";
+            $js = "var $name = $js" . ($isAddSemicolon ? ";" : "");
+        } elseif ($isAddSemicolon) {
+            $js .= ";";
         }
-        $js .= $this->getEvents() . ($map !== null && empty($name) ? ";" : "");
+
         return new JsExpression($js);
     }
 }
