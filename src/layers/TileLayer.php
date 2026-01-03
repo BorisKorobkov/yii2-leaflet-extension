@@ -44,7 +44,7 @@ class TileLayer extends Layer
      *
      * ```
      * $layer = new TileLayer([
-     *    'urlTemplate' => 'L.tileLayer('https://{s}.somedomain.com/{foo}/{z}/{x}/{y}.png',
+     *    'urlTemplate' => 'https://{s}.somedomain.com/{foo}/{z}/{x}/{y}.png',
      *    'clientOptions' => [
      *        'foo' => 'bar'
      *    ]

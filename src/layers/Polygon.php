@@ -40,7 +40,7 @@ class Polygon extends PolyLine
 
     /**
      * Returns the javascript ready code for the object to render on the map.
-     * To add a Polygon to the map, you need to use the special method [[LetLeaf::addPolygon]].
+     * To add a Polygon to the map, you need to use the special method [[LeafLet::addPolygon]].
      * @return JsExpression
      */
     public function encode(bool $isAddSemicolon = true): JsExpression

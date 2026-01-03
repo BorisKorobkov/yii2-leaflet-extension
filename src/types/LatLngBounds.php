@@ -52,12 +52,12 @@ class LatLngBounds extends Type
     public ?string $name = null;
 
     /**
-     * @var LatLng the southWest boundary
+     * @var LatLng|null the southWest boundary
      */
     private ?LatLng $_southWest = null;
     
     /**
-     * @var LatLng the northEast boundary
+     * @var LatLng|null the northEast boundary
      */
     private ?LatLng $_northEast = null;
 

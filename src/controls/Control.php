@@ -57,7 +57,7 @@ abstract class Control extends Component
     private ?string $_name = null;
 
     /**
-     * Returns the name of the layer.
+     * Returns the name of the control.
      *
      * @param boolean $autoGenerate whether to generate a name if it is not set previously
      *
@@ -72,7 +72,7 @@ abstract class Control extends Component
     }
 
     /**
-     * Sets the name of the layer.
+     * Sets the name of the control.
      *
      * @param string|null $value name of the layer.
      */

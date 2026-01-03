@@ -45,7 +45,7 @@ class Point extends Type implements ArrayableInterface
     public float $y;
     
     /**
-     * @var bool if round is set to true, LetLeaf will round the x and y values.
+     * @var bool if round is set to true, LeafLet will round the x and y values.
      */
     public bool $round = false;
 
@@ -61,7 +61,7 @@ class Point extends Type implements ArrayableInterface
     }
 
     /**
-     * @return \yii\web\JsExpression the js initialization code of the object
+     * @return \yii\web\JsExpression the js initialization code of the object.
      */
     public function encode(): JsExpression
     {

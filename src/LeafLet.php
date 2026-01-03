@@ -47,6 +47,7 @@ class LeafLet extends Component
 
     /**
      * @var string the prefix to the automatically generated object names.
+     *
      * @see [[generateName()]]
      */
     public static string $autoNamePrefix = 'l';
@@ -76,17 +77,17 @@ class LeafLet extends Component
     public array $clientEvents = [];
 
     /**
-     * @var Layer[] holding ui layers (do not confuse with map layers, these are markers, popups, polygons, etc)
+     * @var Layer[] holding ui layers (do not confuse with map layers, these are markers, popups, polygons, etc).
      */
     private array $_layers = [];
 
     /**
-     * @var LayerGroup[] holding layer groups
+     * @var LayerGroup[] holding layer groups.
      */
     private array $_layerGroups = [];
     
     /**
-     * @var LatLng sets the center of the map
+     * @var LatLng|null sets the center of the map.
      */
     private ?LatLng $_center = null;
 
@@ -146,7 +147,7 @@ class LeafLet extends Component
     }
 
     /**
-     * @var \boriskorobkov\leaflet\layers\TileLayer
+     * @var \boriskorobkov\leaflet\layers\TileLayer|null
      */
     private ?TileLayer $_tileLayer = null;
 
@@ -233,7 +234,7 @@ class LeafLet extends Component
     }
 
     /**
-     * @var PluginManager
+     * @var PluginManager|null
      */
     private ?PluginManager $_plugins = null;
 
@@ -259,7 +260,7 @@ class LeafLet extends Component
     /**
      * Removes an installed plugin
      *
-     * @param $plugin
+     * @param Plugin $plugin
      *
      * @return mixed
      */
@@ -270,6 +271,8 @@ class LeafLet extends Component
 
     /**
      * Initializes the widget.
+     *
+     * @throws InvalidConfigException
      */
     public function init(): void
     {
