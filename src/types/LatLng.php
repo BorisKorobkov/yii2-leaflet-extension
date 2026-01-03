@@ -6,9 +6,14 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace dosamigos\leaflet\types;
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+namespace boriskorobkov\leaflet\types;
 
-use dosamigos\leaflet\LeafLet;
+use boriskorobkov\leaflet\LeafLet;
 use yii\base\InvalidConfigException;
 use yii\helpers\Json;
 use yii\web\JsExpression;
@@ -20,19 +25,19 @@ use yii\web\JsExpression;
  * (unless noted otherwise), so these lines are equivalent:
  *
  * ```
- * use dosamigos\leafletjs\layers\Marker;
- * use dosamigos\leafletjs\types\LatLng;
+ * use boriskorobkov\leafletjs\layers\Marker;
+ * use boriskorobkov\leafletjs\types\LatLng;
  *
  * $marker = new Marker(['latLong'=>[50, 30]]);
  * $marker = new Marker(new LatLng(['latLng'=>[50,30]]));
  * ```
  *
- * @see http://leafletjs.com/reference.html#latlng
- * @see http://leafletjs.com/reference.html#bounds
+ * @see https://leafletjs.com/reference.html#latlng
+ * @see https://leafletjs.com/reference.html#bounds
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @link https://www.ramirezcobos.com/
  * @link https://www.2amigos.us/
- * @package dosamigos\leaflet\types
+ * @package boriskorobkov\leaflet\types
  */
 class LatLng extends Type implements ArrayableInterface
 {

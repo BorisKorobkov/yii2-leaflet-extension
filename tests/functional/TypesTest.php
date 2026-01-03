@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace tests;
 
-use dosamigos\leaflet\types\Bounds;
-use dosamigos\leaflet\types\DivIcon;
-use dosamigos\leaflet\types\Icon;
-use dosamigos\leaflet\types\LatLng;
-use dosamigos\leaflet\types\LatLngBounds;
-use dosamigos\leaflet\types\Point;
+use boriskorobkov\leaflet\types\Bounds;
+use boriskorobkov\leaflet\types\DivIcon;
+use boriskorobkov\leaflet\types\Icon;
+use boriskorobkov\leaflet\types\LatLng;
+use boriskorobkov\leaflet\types\LatLngBounds;
+use boriskorobkov\leaflet\types\Point;
 
 /**
  * @group types
@@ -91,7 +91,7 @@ class TypesTest extends TestCase
     {
         $point = new Point(['x' => 1, 'y' => 2]);
 
-        $icon = new Icon(['iconUrl' => 'http://example.com/img.png']);
+        $icon = new Icon(['iconUrl' => 'https://example.com/img.png']);
 
         $icon->setIconSize($point);
         $this->assertEquals($point, $icon->getIconSize());
@@ -106,7 +106,7 @@ class TypesTest extends TestCase
 
         $icon->name = 'testIcon';
 
-        $expected = 'var testIcon = L.icon({"name":"testIcon","iconUrl":"http://example.com/img.png","iconAnchor":[1,2],"iconSize":[1,2],"popupAnchor":[1,2],"shadowAnchor":[1,2],"shadowSize":[1,2]});';
+        $expected = 'var testIcon = L.icon({"name":"testIcon","iconUrl":"https://example.com/img.png","iconAnchor":[1,2],"iconSize":[1,2],"popupAnchor":[1,2],"shadowAnchor":[1,2],"shadowSize":[1,2]});';
         $actual = $icon->encode();
         $this->assertEquals($expected, $actual);
 

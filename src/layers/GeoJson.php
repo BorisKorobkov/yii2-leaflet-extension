@@ -6,10 +6,15 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
 
-namespace dosamigos\leaflet\layers;
+namespace boriskorobkov\leaflet\layers;
 
-use dosamigos\leaflet\LeafLet;
+use boriskorobkov\leaflet\LeafLet;
 use yii\helpers\Json;
 use yii\web\JsExpression;
 
@@ -20,7 +25,7 @@ use yii\web\JsExpression;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @link https://www.ramirezcobos.com/
  * @link https://www.2amigos.us/
- * @package dosamigos\leaflet\layers
+ * @package boriskorobkov\leaflet\layers
  */
 /**
  * @property string $name
@@ -29,7 +34,7 @@ class GeoJson extends Layer
 {
     /**
      * @var array geo spatial data interchange json object. For information related to GeoJSON format, please visit
-     * [http://geojson.org/geojson-spec.html](http://geojson.org/geojson-spec.html). This component does not validate
+     * [https://geojson.org/geojson-spec.html](https://geojson.org/geojson-spec.html). This component does not validate
      * this data, it just renders it. This array will be converted into a json object previous encoding.
      */
     public array $data = [];

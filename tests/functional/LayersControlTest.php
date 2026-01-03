@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace tests;
 
-use dosamigos\leaflet\controls\Layers;
-use dosamigos\leaflet\layers\LayerGroup;
-use dosamigos\leaflet\layers\Marker;
-use dosamigos\leaflet\layers\TileLayer;
-use dosamigos\leaflet\types\LatLng;
+use boriskorobkov\leaflet\controls\Layers;
+use boriskorobkov\leaflet\layers\LayerGroup;
+use boriskorobkov\leaflet\layers\Marker;
+use boriskorobkov\leaflet\layers\TileLayer;
+use boriskorobkov\leaflet\types\LatLng;
 use yii\helpers\Json;
 
 /**
@@ -16,7 +16,7 @@ use yii\helpers\Json;
 class LayersControlTest extends TestCase
 {
     /**
-     * @var \dosamigos\leaflet\controls\Layers $layers
+     * @var \boriskorobkov\leaflet\controls\Layers $layers
      */
     public $layers;
 
@@ -53,7 +53,7 @@ class LayersControlTest extends TestCase
 
         $layers = new Layers();
         $tileLayer = new TileLayer([
-            'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
+            'urlTemplate' => 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
         ]);
 
         $layers->setBaseLayers(['mqcdn'=> $tileLayer]);
@@ -95,7 +95,7 @@ class LayersControlTest extends TestCase
         $layers->setOverlays(['cities'  => $group]);
 
         $tileLayer = new TileLayer([
-            'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
+            'urlTemplate' => 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
         ]);
 
         $layers->setBaseLayers(['mqcdn'=> $tileLayer]);
@@ -116,7 +116,7 @@ class LayersControlTest extends TestCase
         $layers->setOverlays(['cities'  => $group]);
 
         $tileLayer = new TileLayer([
-            'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
+            'urlTemplate' => 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
         ]);
 
         $layers->setBaseLayers(['mqcdn'=> $tileLayer]);
@@ -137,7 +137,7 @@ class LayersControlTest extends TestCase
         $layers->setOverlays(['cities'  => $group]);
 
         $tileLayer = new TileLayer([
-            'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
+            'urlTemplate' => 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
         ]);
 
         $layers->setBaseLayers(['mqcdn'=> $tileLayer]);

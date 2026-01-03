@@ -6,7 +6,12 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace dosamigos\leaflet\types;
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+namespace boriskorobkov\leaflet\types;
 
 use yii\base\InvalidConfigException;
 use yii\base\InvalidArgumentException;
@@ -19,7 +24,7 @@ use yii\web\JsExpression;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @link https://www.ramirezcobos.com/
  * @link https://www.2amigos.us/
- * @package dosamigos\leaflet\types
+ * @package boriskorobkov\leaflet\types
  */
 
 /**

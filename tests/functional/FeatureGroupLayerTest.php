@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace tests;
 
-use dosamigos\leaflet\layers\FeatureGroup;
-use dosamigos\leaflet\layers\Marker;
-use dosamigos\leaflet\types\LatLng;
+use boriskorobkov\leaflet\layers\FeatureGroup;
+use boriskorobkov\leaflet\layers\Marker;
+use boriskorobkov\leaflet\types\LatLng;
 use yii\web\JsExpression;
 
 /**

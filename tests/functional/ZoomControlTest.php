@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace tests;
 
-use dosamigos\leaflet\controls\Zoom;
+use boriskorobkov\leaflet\controls\Zoom;
 
 /**
  * @group controls

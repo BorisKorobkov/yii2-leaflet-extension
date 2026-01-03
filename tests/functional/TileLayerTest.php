@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace tests;
 
-use dosamigos\leaflet\layers\TileLayer;
+use boriskorobkov\leaflet\layers\TileLayer;
 
 /**
  * @group layers
@@ -20,10 +20,10 @@ class TileLayerTest extends TestCase
     {
         $tileLayer = new TileLayer(
             [
-                'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
+                'urlTemplate' => 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
             ]
         );
-        $expected = 'L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {});';
+        $expected = 'L.tileLayer("https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {});';
         $actual = $tileLayer->encode();
         $this->assertEquals($expected, $actual);
     }
@@ -32,10 +32,10 @@ class TileLayerTest extends TestCase
         $tileLayer = new TileLayer(
             [
                 'name' => 'testTileLayer',
-                'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
+                'urlTemplate' => 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
             ]
         );
-        $expected = 'var testTileLayer = L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {});';
+        $expected = 'var testTileLayer = L.tileLayer("https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {});';
         $actual = $tileLayer->encode();
         $this->assertEquals($expected, $actual);
     }
@@ -44,10 +44,10 @@ class TileLayerTest extends TestCase
         $tileLayer = new TileLayer(
             [
                 'map' => 'map',
-                'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
+                'urlTemplate' => 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg'
             ]
         );
-        $expected = 'L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {}).addTo(map);';
+        $expected = 'L.tileLayer("https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {}).addTo(map);';
         $actual = $tileLayer->encode();
         $this->assertEquals($expected, $actual);
     }

@@ -6,8 +6,13 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
 
-namespace dosamigos\leaflet\layers;
+namespace boriskorobkov\leaflet\layers;
 
 use yii\helpers\Json;
 use yii\web\JsExpression;
@@ -19,7 +24,7 @@ use yii\web\JsExpression;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @link https://www.ramirezcobos.com/
  * @link https://www.2amigos.us/
- * @package dosamigos\leaflet\layers
+ * @package boriskorobkov\leaflet\layers
  */
 /**
  * @property string $name
@@ -67,7 +72,7 @@ class FeatureGroup extends LayerGroup
         $map = $this->map;
         $layers = $this->getLayers();
         $layersJs = [];
-        /** @var \dosamigos\leaflet\layers\Layer $layer */
+        /** @var \boriskorobkov\leaflet\layers\Layer $layer */
         foreach ($layers as $layer) {
             $layer->setName(null);
             $layersJs[] = $layer->encode(false);

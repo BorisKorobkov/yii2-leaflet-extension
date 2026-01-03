@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace tests;
 
 
-use dosamigos\leaflet\layers\LayerGroup;
-use dosamigos\leaflet\layers\Marker;
-use dosamigos\leaflet\layers\Popup;
-use dosamigos\leaflet\types\LatLng;
+use boriskorobkov\leaflet\layers\LayerGroup;
+use boriskorobkov\leaflet\layers\Marker;
+use boriskorobkov\leaflet\layers\Popup;
+use boriskorobkov\leaflet\types\LatLng;
 use yii\web\JsExpression;
 
 /**

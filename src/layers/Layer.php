@@ -6,10 +6,15 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace dosamigos\leaflet\layers;
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+namespace boriskorobkov\leaflet\layers;
 
-use dosamigos\leaflet\LeafLet;
-use dosamigos\leaflet\types\Type;
+use boriskorobkov\leaflet\LeafLet;
+use boriskorobkov\leaflet\types\Type;
 use yii\base\Component;
 use yii\helpers\Json;
 use yii\web\JsExpression;
@@ -19,7 +24,7 @@ use yii\web\JsExpression;
  *
  * @property string $name
  *
- * @package dosamigos\leaflet\layers
+ * @package boriskorobkov\leaflet\layers
  */
 abstract class Layer extends Component
 {

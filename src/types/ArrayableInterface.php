@@ -6,13 +6,18 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
 
-namespace dosamigos\leaflet\types;
+namespace boriskorobkov\leaflet\types;
 
 /**
  * Arrayable should be implemented by classes that need to be represented in array format.
  *
- * @package dosamigos\leaflet\types
+ * @package boriskorobkov\leaflet\types
  */
 interface ArrayableInterface
 {

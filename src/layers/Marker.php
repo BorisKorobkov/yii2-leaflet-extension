@@ -6,9 +6,14 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace dosamigos\leaflet\layers;
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+namespace boriskorobkov\leaflet\layers;
 
-use dosamigos\leaflet\types\Icon;
+use boriskorobkov\leaflet\types\Icon;
 use yii\base\InvalidConfigException;
 use yii\web\JsExpression;
 
@@ -19,11 +24,11 @@ use yii\web\JsExpression;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @link https://www.ramirezcobos.com/
  * @link https://www.2amigos.us/
- * @package dosamigos\leaflet\layers
+ * @package boriskorobkov\leaflet\layers
  */
 /**
  * @property string $name
- * @property \dosamigos\leaflet\types\LatLng $latLng
+ * @property \boriskorobkov\leaflet\types\LatLng $latLng
  * @property string $popupContent
  * @property bool $openPopup
  */
@@ -43,7 +48,7 @@ class Marker extends Layer
     }
 
     /**
-     * @return \dosamigos\leaflet\types\Icon
+     * @return \boriskorobkov\leaflet\types\Icon
      */
     public function getIcon(): ?Icon
     {

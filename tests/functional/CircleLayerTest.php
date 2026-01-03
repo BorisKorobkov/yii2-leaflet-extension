@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace tests;
 
 
-use dosamigos\leaflet\layers\Circle;
-use dosamigos\leaflet\types\LatLng;
+use boriskorobkov\leaflet\layers\Circle;
+use boriskorobkov\leaflet\types\LatLng;
 
 /**
  * @group layers

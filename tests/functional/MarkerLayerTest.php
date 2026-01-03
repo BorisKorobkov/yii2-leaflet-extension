@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace tests;
 
 
-use dosamigos\leaflet\layers\Marker;
-use dosamigos\leaflet\types\Icon;
-use dosamigos\leaflet\types\LatLng;
+use boriskorobkov\leaflet\layers\Marker;
+use boriskorobkov\leaflet\types\Icon;
+use boriskorobkov\leaflet\types\LatLng;
 use yii\web\JsExpression;
 
 class MarkerLayerTest extends TestCase
@@ -20,7 +20,7 @@ class MarkerLayerTest extends TestCase
     public function testEncode()
     {
         $latLng = new LatLng(['lat' => 51.508, 'lng' => -0.11]);
-        $icon = new Icon(['iconUrl' => 'http://example.com/icon.png']);
+        $icon = new Icon(['iconUrl' => 'https://example.com/icon.png']);
         $marker = new Marker(
             [
                 'icon' => $icon,
@@ -30,7 +30,7 @@ class MarkerLayerTest extends TestCase
         );
 
         $this->assertNotNull($marker->icon);
-        $expected = 'L.marker([51.508,-0.11], {"icon":L.icon({"iconUrl":"http://example.com/icon.png"})}).bindPopup("test!");';
+        $expected = 'L.marker([51.508,-0.11], {"icon":L.icon({"iconUrl":"https://example.com/icon.png"})}).bindPopup("test!");';
         $actual = $marker->encode();
 
         $this->assertEquals($expected, $actual);

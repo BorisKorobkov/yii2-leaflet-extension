@@ -6,8 +6,13 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
 
-namespace dosamigos\leaflet;
+namespace boriskorobkov\leaflet;
 
 use yii\base\Component;
 use yii\helpers\Json;
@@ -24,7 +29,7 @@ use yii\web\JsExpression;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @link https://www.ramirezcobos.com/
  * @link https://www.2amigos.us/
- * @package dosamigos\leaflet
+ * @package boriskorobkov\leaflet
  */
 abstract class Plugin extends Component
 {
@@ -36,7 +41,7 @@ abstract class Plugin extends Component
     /**
      * @var array the options for the underlying LeafLetJs JS component.
      * Please refer to the LeafLetJs api reference for possible
-     * [options](http://leafletjs.com/reference.html).
+     * [options](https://leafletjs.com/reference.html).
      */
     public array $clientOptions = [];
 

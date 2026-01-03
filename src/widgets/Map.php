@@ -6,11 +6,16 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
 
-namespace dosamigos\leaflet\widgets;
+namespace boriskorobkov\leaflet\widgets;
 
-use dosamigos\leaflet\LeafLet;
-use dosamigos\leaflet\LeafLetAsset;
+use boriskorobkov\leaflet\LeafLet;
+use boriskorobkov\leaflet\LeafLetAsset;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
@@ -22,12 +27,12 @@ use yii\helpers\Json;
  * *Important* It is very important to specify the height of the widget, whether with a class name or through an inline
  * style. Failing to configure the height may have unexpected rendering results.
  *
- * @package dosamigos\leaflet\widgets
+ * @package boriskorobkov\leaflet\widgets
  */
 class Map extends Widget
 {
     /**
-     * @var \dosamigos\leaflet\LeafLet component holding all configuration
+     * @var \boriskorobkov\leaflet\LeafLet component holding all configuration
      */
     public ?LeafLet $leafLet = null;
 

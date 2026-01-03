@@ -6,12 +6,17 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
 
-namespace dosamigos\leaflet\layers;
+namespace boriskorobkov\leaflet\layers;
 
-use dosamigos\leaflet\LeafLet;
-use dosamigos\leaflet\types\LatLng;
-use dosamigos\leaflet\types\LatLngBounds;
+use boriskorobkov\leaflet\LeafLet;
+use boriskorobkov\leaflet\types\LatLng;
+use boriskorobkov\leaflet\types\LatLngBounds;
 use yii\base\InvalidArgumentException;
 use yii\helpers\Json;
 use yii\web\JsExpression;
@@ -20,7 +25,7 @@ use yii\web\JsExpression;
  * PolyLine is a class for drawing a polygon overlay on the map.
  *
  * @see https://leafletjs.com/reference.html#polyline
- * @package dosamigos\leaflet\layers
+ * @package boriskorobkov\leaflet\layers
  */
 /**
  * @property string $name
@@ -58,7 +63,7 @@ class PolyLine extends Layer
     }
 
     /**
-     * @return \dosamigos\leaflet\types\LatLng[]
+     * @return \boriskorobkov\leaflet\types\LatLng[]
      */
     public function getLatLngs(): array
     {

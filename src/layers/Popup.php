@@ -6,8 +6,13 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
 
-namespace dosamigos\leaflet\layers;
+namespace boriskorobkov\leaflet\layers;
 
 use yii\base\InvalidConfigException;
 use yii\helpers\Json;
@@ -18,11 +23,11 @@ use yii\web\JsExpression;
  * object (ie [[Marker]]) better use their `popup` attribute.
  *
  * @see https://leafletjs.com/reference.html#popup
- * @package dosamigos\leaflet\layers
+ * @package boriskorobkov\leaflet\layers
  */
 
 /**
- * @property \dosamigos\leaflet\types\LatLng $latLng
+ * @property \boriskorobkov\leaflet\types\LatLng $latLng
  */
 class Popup extends Layer
 {

@@ -6,11 +6,16 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace dosamigos\leaflet\controls;
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+namespace boriskorobkov\leaflet\controls;
 
-use dosamigos\leaflet\layers\LayerGroup;
-use dosamigos\leaflet\layers\TileLayer;
-use dosamigos\leaflet\LeafLet;
+use boriskorobkov\leaflet\layers\LayerGroup;
+use boriskorobkov\leaflet\layers\TileLayer;
+use boriskorobkov\leaflet\LeafLet;
 use yii\base\InvalidArgumentException;
 use yii\helpers\Json;
 use yii\web\JsExpression;
@@ -22,12 +27,12 @@ use yii\web\JsExpression;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @link https://www.ramirezcobos.com/
  * @link https://www.2amigos.us/
- * @package dosamigos\leaflet\controls
+ * @package boriskorobkov\leaflet\controls
  */
 class Layers extends Control
 {
     /**
-     * @var \dosamigos\leaflet\layers\TileLayer[]
+     * @var \boriskorobkov\leaflet\layers\TileLayer[]
      */
     private array $_baseLayers = [];
 
@@ -47,7 +52,7 @@ class Layers extends Control
     }
 
     /**
-     * @return \dosamigos\leaflet\layers\TileLayer[]
+     * @return \boriskorobkov\leaflet\layers\TileLayer[]
      */
     public function getBaseLayers(): array
     {
@@ -68,12 +73,12 @@ class Layers extends Control
     }
 
     /**
-     * @var \dosamigos\leaflet\layers\Layer[]
+     * @var \boriskorobkov\leaflet\layers\Layer[]
      */
     private array $_overlays = [];
 
     /**
-     * @param \dosamigos\leaflet\layers\LayerGroup[] $overlays
+     * @param \boriskorobkov\leaflet\layers\LayerGroup[] $overlays
      *
      * @throws \yii\base\InvalidArgumentException
      */
@@ -88,7 +93,7 @@ class Layers extends Control
     }
 
     /**
-     * @return \dosamigos\leaflet\layers\Layer[]
+     * @return \boriskorobkov\leaflet\layers\Layer[]
      */
     public function getOverlays(): array
     {
@@ -102,7 +107,7 @@ class Layers extends Control
     {
         $overlays = [];
         /**
-         * @var \dosamigos\leaflet\layers\LayerGroup $overlay
+         * @var \boriskorobkov\leaflet\layers\LayerGroup $overlay
          */
         foreach ($this->getOverlays() as $key => $overlay) {
             $overlays[$key] = $overlay->oneLineEncode();

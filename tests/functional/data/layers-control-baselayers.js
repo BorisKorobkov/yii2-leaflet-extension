@@ -1,1 +1,1 @@
-{"mqcdn":L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {})}
+{"mqcdn":L.tileLayer("https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg", {})}

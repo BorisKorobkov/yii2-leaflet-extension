@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace tests;
 
-use dosamigos\leaflet\layers\ImageOverlay;
-use dosamigos\leaflet\layers\Marker;
-use dosamigos\leaflet\types\LatLng;
-use dosamigos\leaflet\types\LatLngBounds;
+use boriskorobkov\leaflet\layers\ImageOverlay;
+use boriskorobkov\leaflet\layers\Marker;
+use boriskorobkov\leaflet\types\LatLng;
+use boriskorobkov\leaflet\types\LatLngBounds;
 
 /**
  * @group layers
@@ -21,11 +21,11 @@ class ImageOverlayTest extends TestCase
                 'northEast' => new LatLng(['lat' => 39.74, 'lng' => -104.99])
             ]
         );
-        $overlay = new ImageOverlay(['imageBounds' => $bounds, 'imageUrl' => 'http://www.example.com/img.png']);
+        $overlay = new ImageOverlay(['imageBounds' => $bounds, 'imageUrl' => 'https://www.example.com/img.png']);
         $this->assertEquals($bounds, $overlay->getImageBounds());
 
         $actual = $overlay->encode();
-        $expected = 'L.imageOverlay("http://www.example.com/img.png", L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {});';
+        $expected = 'L.imageOverlay("https://www.example.com/img.png", L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {});';
         $this->assertEquals($expected, $actual);
     }
 
@@ -38,12 +38,12 @@ class ImageOverlayTest extends TestCase
             ]
         );
         $overlay = new ImageOverlay(
-            ['name' => 'test', 'imageBounds' => $bounds, 'imageUrl' => 'http://www.example.com/img.png']
+            ['name' => 'test', 'imageBounds' => $bounds, 'imageUrl' => 'https://www.example.com/img.png']
         );
         $this->assertEquals($bounds, $overlay->getImageBounds());
 
         $actual = $overlay->encode();
-        $expected = 'var test = L.imageOverlay("http://www.example.com/img.png", L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {});';
+        $expected = 'var test = L.imageOverlay("https://www.example.com/img.png", L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {});';
         $this->assertEquals($expected, $actual);
     }
 
@@ -56,12 +56,12 @@ class ImageOverlayTest extends TestCase
             ]
         );
         $overlay = new ImageOverlay(
-            ['map' => 'test', 'imageBounds' => $bounds, 'imageUrl' => 'http://www.example.com/img.png']
+            ['map' => 'test', 'imageBounds' => $bounds, 'imageUrl' => 'https://www.example.com/img.png']
         );
         $this->assertEquals($bounds, $overlay->getImageBounds());
 
         $actual = $overlay->encode();
-        $expected = 'L.imageOverlay("http://www.example.com/img.png", L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {}).addTo(test);';
+        $expected = 'L.imageOverlay("https://www.example.com/img.png", L.latLngBounds([39.61,-105.02], [39.74,-104.99]), {}).addTo(test);';
         $this->assertEquals($expected, $actual);
     }
 }

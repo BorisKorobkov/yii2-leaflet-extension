@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace tests;
 
-use dosamigos\leaflet\layers\Popup;
-use dosamigos\leaflet\types\LatLng;
+use boriskorobkov\leaflet\layers\Popup;
+use boriskorobkov\leaflet\types\LatLng;
 
 /**
  * @group layers

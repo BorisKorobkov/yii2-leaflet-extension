@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace tests;
 
 
-use dosamigos\leaflet\layers\GeoJson;
+use boriskorobkov\leaflet\layers\GeoJson;
 
 /**
  * @group layers

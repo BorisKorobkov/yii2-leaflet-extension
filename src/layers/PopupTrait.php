@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @link https://www.2amigos.us/
  */
 
-namespace dosamigos\leaflet\layers;
+namespace boriskorobkov\leaflet\layers;
 
 trait PopupTrait
 {

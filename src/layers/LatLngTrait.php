@@ -6,19 +6,24 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace dosamigos\leaflet\layers;
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+namespace boriskorobkov\leaflet\layers;
 
-use dosamigos\leaflet\types\LatLng;
+use boriskorobkov\leaflet\types\LatLng;
 
 trait LatLngTrait
 {
     /**
-     * @var \dosamigos\leaflet\types\LatLng holds the latitude and longitude values.
+     * @var \boriskorobkov\leaflet\types\LatLng holds the latitude and longitude values.
      */
     private ?LatLng $_latLon = null;
 
     /**
-     * @param \dosamigos\leaflet\types\LatLng $latLon the position to render the marker
+     * @param \boriskorobkov\leaflet\types\LatLng $latLon the position to render the marker
      */
     public function setLatLng(LatLng $latLon): void
     {
@@ -26,7 +31,7 @@ trait LatLngTrait
     }
 
     /**
-     * @return \dosamigos\leaflet\types\LatLng
+     * @return \boriskorobkov\leaflet\types\LatLng
      */
     public function getLatLng(): ?LatLng
     {

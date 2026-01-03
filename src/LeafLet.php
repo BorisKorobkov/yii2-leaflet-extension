@@ -6,15 +6,20 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace dosamigos\leaflet;
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+namespace boriskorobkov\leaflet;
 
-use dosamigos\leaflet\controls\Control;
-use dosamigos\leaflet\layers\Layer;
-use dosamigos\leaflet\layers\LayerGroup;
-use dosamigos\leaflet\layers\TileLayer;
-use dosamigos\leaflet\layers\Polygon;
-use dosamigos\leaflet\types\LatLng;
-use dosamigos\leaflet\widgets\Map;
+use boriskorobkov\leaflet\controls\Control;
+use boriskorobkov\leaflet\layers\Layer;
+use boriskorobkov\leaflet\layers\LayerGroup;
+use boriskorobkov\leaflet\layers\TileLayer;
+use boriskorobkov\leaflet\layers\Polygon;
+use boriskorobkov\leaflet\types\LatLng;
+use boriskorobkov\leaflet\widgets\Map;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\base\InvalidArgumentException;
@@ -22,7 +27,7 @@ use yii\helpers\ArrayHelper;
 
 /**
  * Class LeafLet
- * @package dosamigos\leaflet
+ * @package boriskorobkov\leaflet
  */
 
 /**
@@ -60,7 +65,7 @@ class LeafLet extends Component
     /**
      * @var array the options for the underlying LeafLetJs JS component.
      * Please refer to the LeafLetJs api reference for possible
-     * [options](http://leafletjs.com/reference.html).
+     * [options](https://leafletjs.com/reference.html).
      */
     public array $clientOptions = [];
 
@@ -110,7 +115,7 @@ class LeafLet extends Component
     private array $_controls = [];
 
     /**
-     * @param \dosamigos\leaflet\controls\Control[] $controls
+     * @param \boriskorobkov\leaflet\controls\Control[] $controls
      *
      * @throws \yii\base\InvalidArgumentException
      */
@@ -125,7 +130,7 @@ class LeafLet extends Component
     }
 
     /**
-     * @return \dosamigos\leaflet\controls\Control[]
+     * @return \boriskorobkov\leaflet\controls\Control[]
      */
     public function getControls(): array
     {
@@ -141,12 +146,12 @@ class LeafLet extends Component
     }
 
     /**
-     * @var \dosamigos\leaflet\layers\TileLayer
+     * @var \boriskorobkov\leaflet\layers\TileLayer
      */
     private ?TileLayer $_tileLayer = null;
 
     /**
-     * @param \dosamigos\leaflet\layers\TileLayer $tileLayer
+     * @param \boriskorobkov\leaflet\layers\TileLayer $tileLayer
      *
      * @return static the component itself
      */
@@ -164,7 +169,7 @@ class LeafLet extends Component
     }
 
     /**
-     * @return \dosamigos\leaflet\layers\TileLayer
+     * @return \boriskorobkov\leaflet\layers\TileLayer
      */
     public function getTileLayer(): ?TileLayer
     {

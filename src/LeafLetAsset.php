@@ -6,7 +6,12 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace dosamigos\leaflet;
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+namespace boriskorobkov\leaflet;
 
 use yii\web\AssetBundle;
 
@@ -18,7 +23,7 @@ use yii\web\AssetBundle;
  *        // ...
  *        'components' => [
  *            'bundles' => [
- *                'dosamigos\leaflet\LeafLetAsset' => [
+ *                'boriskorobkov\leaflet\LeafLetAsset' => [
  *                    'sourcePath' => null,
  *                    'js' => [ 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js' ],
  *                    'css' => [ 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' ]
@@ -31,7 +36,7 @@ use yii\web\AssetBundle;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @link https://www.ramirezcobos.com/
  * @link https://www.2amigos.us/
- * @package dosamigos\leaflet
+ * @package boriskorobkov\leaflet
  */
 class LeafLetAsset extends AssetBundle
 {

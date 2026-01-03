@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace tests;
 
-use dosamigos\leaflet\Plugin;
+use boriskorobkov\leaflet\Plugin;
 use yii\web\JsExpression;
 
 class TestPlugin extends Plugin

@@ -6,9 +6,14 @@ declare(strict_types=1);
  * @link https://2amigos.us
  * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-namespace dosamigos\leaflet\layers;
+/**
+ * @copyright Copyright (c) 2026 Boris Korobkov
+ * @link https://github.com/BorisKorobkov
+ * @license https://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+namespace boriskorobkov\leaflet\layers;
 
-use dosamigos\leaflet\types\LatLngBounds;
+use boriskorobkov\leaflet\types\LatLngBounds;
 use yii\helpers\Json;
 use yii\web\JsExpression;
 

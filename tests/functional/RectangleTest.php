@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace tests;
 
-use dosamigos\leaflet\layers\Rectangle;
-use dosamigos\leaflet\types\LatLng;
-use dosamigos\leaflet\types\LatLngBounds;
+use boriskorobkov\leaflet\layers\Rectangle;
+use boriskorobkov\leaflet\types\LatLng;
+use boriskorobkov\leaflet\types\LatLngBounds;
 
 /**
  * @group layers

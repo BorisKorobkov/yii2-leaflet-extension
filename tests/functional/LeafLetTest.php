@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace tests;
 
 
-use dosamigos\leaflet\controls\Layers;
-use dosamigos\leaflet\controls\Zoom;
-use dosamigos\leaflet\layers\LayerGroup;
-use dosamigos\leaflet\layers\Marker;
-use dosamigos\leaflet\layers\Polygon;
-use dosamigos\leaflet\layers\TileLayer;
-use dosamigos\leaflet\LeafLet;
-use dosamigos\leaflet\types\LatLng;
+use boriskorobkov\leaflet\controls\Layers;
+use boriskorobkov\leaflet\controls\Zoom;
+use boriskorobkov\leaflet\layers\LayerGroup;
+use boriskorobkov\leaflet\layers\Marker;
+use boriskorobkov\leaflet\layers\Polygon;
+use boriskorobkov\leaflet\layers\TileLayer;
+use boriskorobkov\leaflet\LeafLet;
+use boriskorobkov\leaflet\types\LatLng;
 use yii\web\JsExpression;
 
 class LeafLetTest extends TestCase
@@ -53,11 +53,11 @@ class LeafLetTest extends TestCase
         $tileLayer = new TileLayer(
             [
                 'map' => 'testMap',
-                'urlTemplate' => 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
+                'urlTemplate' => 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg',
                 'clientOptions' => [
-                    'attribution' => 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> ' .
-                        '<img src="http://developer.mapquest.com/content/osm/mq_logo.png">, ' .
-                        'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+                    'attribution' => 'Tiles Courtesy of <a href="https://www.mapquest.com/" target="_blank">MapQuest</a> ' .
+                        '<img src="https://developer.mapquest.com/content/osm/mq_logo.png">, ' .
+                        'Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
                     'subdomains' => '1234'
                 ]
             ]
