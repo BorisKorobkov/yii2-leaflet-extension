@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "description": "Renovate",
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "groupName": "all-dependency-updates"
+    }
+  ],
+  "separateMajorMinor": false,
+  "separateMultipleMajor": false,
+  "automerge": false
+}
